@@ -27,7 +27,15 @@
     cursor: pointer; z-index: 10; animation: pulse 2s infinite; position: relative; padding: 20px;
   }
   @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-  #logoContainer img { width: 220px; height: auto; border-radius: 15px; box-shadow: 0 0 30px #00bfff; transition: all 0.3s ease; }
+  #logoContainer img {
+    width: 200px;
+    max-width: 80vw;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 30px #00bfff;
+    transition: all 0.3s ease;
+    display: block;
+  }
   #logoContainer img:hover { box-shadow: 0 0 60px #00bfff; }
   #logoContainer p { margin-top: 15px; font-size: 18px; color: #00ffff; text-shadow: 1px 1px 5px #000; animation: shimmer 2.5s infinite linear; }
   @keyframes shimmer { 0% { opacity:0.5; } 50% { opacity:1; } 100% { opacity:0.5; } }
@@ -45,13 +53,11 @@
   .form-container {
     background: rgba(0,0,0,0.95); padding: 40px; border-radius: 20px;
     border: 2px solid #00bfff; box-shadow: 0 0 50px #00bfff, 0 0 100px #1e90ff inset;
-    width: 400px; text-align: center; position: absolute; top: -100%; left: 50%;
+    width: 400px; max-width: 90vw; text-align: center; position: absolute; top: -100%; left: 50%;
     opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(0.8);
     transition: all 1s ease; z-index: 20;
   }
-  .form-container.show {
-    opacity: 1; pointer-events: auto; animation: formDropBounce 0.8s ease forwards;
-  }
+  .form-container.show { opacity: 1; pointer-events: auto; animation: formDropBounce 0.8s ease forwards; }
   @keyframes formDropBounce {
     0% { top: -100%; transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
     60% { top: 50%; transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
@@ -60,11 +66,14 @@
   }
 
   h1 { color: #00bfff; font-size: 28px; margin-bottom: 25px; text-shadow: 2px 2px 15px #000; }
+
   input, select {
     width: 100%; padding: 14px; margin: 12px 0; border-radius: 10px; border: none; outline: none;
     font-size: 15px; transition: all 0.3s ease; background: rgba(255,255,255,0.1); color: #fff;
   }
   input::placeholder { color: #aaa; }
+  select { -webkit-appearance:none; -moz-appearance:none; appearance:none; text-align-last:center; background: rgba(255,255,255,0.1); color: #fff; border-radius:10px; padding:14px;}
+  select option[disabled] { color: #aaa; }
   input:focus, select:focus { background: rgba(0,191,255,0.2); box-shadow: 0 0 20px #00bfff; transform: scale(1.02); }
 
   button {
@@ -124,14 +133,8 @@ const form = document.getElementById("prizeForm");
 const successMessage = document.getElementById("successMessage");
 const submitBtn = document.getElementById("submitBtn");
 
-logoContainer.addEventListener("click", () => {
-  logoContainer.style.display = "none";
-  formContainer.classList.add("show");
-});
-backButton.addEventListener("click", () => {
-  formContainer.classList.remove("show");
-  setTimeout(() => { logoContainer.style.display = "flex"; }, 800);
-});
+logoContainer.addEventListener("click", () => { logoContainer.style.display = "none"; formContainer.classList.add("show"); });
+backButton.addEventListener("click", () => { formContainer.classList.remove("show"); setTimeout(() => { logoContainer.style.display = "flex"; }, 800); });
 
 // Particles
 const canvas = document.createElement('canvas');
@@ -166,14 +169,11 @@ const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU
 function createConfetti() {
   for(let i=0;i<150;i++){
     const conf = document.createElement('div');
-    conf.style.position='fixed';
-    conf.style.width='8px';
-    conf.style.height='8px';
+    conf.style.position='fixed'; conf.style.width='8px'; conf.style.height='8px';
     conf.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`;
     conf.style.left=Math.random()*window.innerWidth+'px';
     conf.style.top=Math.random()*window.innerHeight+'px';
-    conf.style.opacity='0.8';
-    conf.style.pointerEvents='none';
+    conf.style.opacity='0.8'; conf.style.pointerEvents='none';
     conf.style.transform=`rotate(${Math.random()*360}deg)`;
     conf.style.animation='fall 3s linear forwards';
     document.body.appendChild(conf);
@@ -187,12 +187,10 @@ document.head.appendChild(style);
 form.addEventListener("submit", async function(e){
   e.preventDefault();
   submitBtn.classList.add("loading");
-
   const playerId = document.getElementById("playerId").value;
   const discordUser = document.getElementById("discordUser").value;
   const itemWon = document.getElementById("itemWon").value;
   const messageLink = document.getElementById("messageLink").value;
-
   const content = `${playerId} | ${discordUser} | ${itemWon} | ${messageLink}`;
   fetch(WEBHOOK_URL,{
     method:"POST",
