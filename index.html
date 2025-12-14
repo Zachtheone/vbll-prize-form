@@ -176,6 +176,16 @@
     input, button { padding: 12px; font-size: 14px; }
     #logoContainer p { font-size: 16px; }
   }
+
+  /* Confetti container */
+  .confetti {
+    pointer-events: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 50;
+    overflow: hidden;
+  }
 </style>
 </head>
 <body>
@@ -192,23 +202,27 @@
 <div class="form-container" id="formContainer">
   <h1>VBLL Prize Submission</h1>
   <form id="prizeForm">
-    <input type="text" id="playerId" placeholder="Player ID (e.g., N-123-456)" required>
-    <input type="text" id="discordUser" placeholder="Discord Username (e.g., user#1234)" required>
-    <input type="text" id="itemWon" placeholder="Item Won" required>
-    <input type="url" id="messageLink" placeholder="Message Link (URL)" required>
+    <input type="text" id="playerId" placeholder="B-123-123" required>
+    <input type="text" id="discordUser" placeholder="Luv.apeks" required>
+    <input type="text" id="itemWon" placeholder="VBLL BOOT" required>
+    <input type="url" id="messageLink" placeholder="https://" required>
     <button type="submit" id="submitBtn">Submit</button>
     <button type="button" id="backButton">← Back to Logo</button>
   </form>
   <div class="success" id="successMessage">✅ Submitted successfully!</div>
 </div>
 
+<div class="confetti" id="confetti"></div>
+
 <script>
+// Logo click
 const logoContainer = document.getElementById("logoContainer");
 const formContainer = document.getElementById("formContainer");
 const backButton = document.getElementById("backButton");
 const form = document.getElementById("prizeForm");
 const successMessage = document.getElementById("successMessage");
 const submitBtn = document.getElementById("submitBtn");
+const confettiContainer = document.getElementById("confetti");
 
 logoContainer.addEventListener("click", () => {
   logoContainer.style.display = "none";
@@ -253,6 +267,37 @@ window.addEventListener('resize',()=>{
   canvas.height = window.innerHeight;
 });
 
+// Confetti generator
+function createConfetti() {
+  const confettiCount = 100;
+  const colors = ['#ff0','#0ff','#f0f','#0f0','#00f','#f00','#fff'];
+  for(let i=0;i<confettiCount;i++){
+    const div = document.createElement('div');
+    div.style.position='absolute';
+    div.style.width='6px';
+    div.style.height='10px';
+    div.style.background = colors[Math.floor(Math.random()*colors.length)];
+    div.style.top='-10px';
+    div.style.left=Math.random()*window.innerWidth+'px';
+    div.style.opacity=1;
+    div.style.transform='rotate('+Math.random()*360+'deg)';
+    confettiContainer.appendChild(div);
+    (function animateConfetti(el){
+      let top = -10;
+      const fall = Math.random()*3+2;
+      const drift = (Math.random()-0.5)*2;
+      const rotSpeed = (Math.random()-0.5)*10;
+      const interval = setInterval(()=>{
+        top += fall;
+        el.style.top = top+'px';
+        el.style.left = (parseFloat(el.style.left)+drift)+'px';
+        el.style.transform = 'rotate('+(rotSpeed+parseFloat(el.style.transform.replace(/[^\d.]/g,'')))+'deg)';
+        if(top>window.innerHeight){ el.remove(); clearInterval(interval); }
+      },16);
+    })(div);
+  }
+}
+
 // Webhook
 const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
 
@@ -275,6 +320,7 @@ form.addEventListener("submit", async function(e){
     submitBtn.classList.remove("loading");
     submitBtn.disabled = false;
     successMessage.classList.add("show");
+    createConfetti();
     form.reset();
     setTimeout(()=>successMessage.classList.remove("show"),4000);
   }).catch(err=>{
