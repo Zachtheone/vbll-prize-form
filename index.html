@@ -25,33 +25,60 @@
     100% { background-position: 0% 50%; }
   }
 
+  /* Particles */
+  #particles { position: fixed; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+  /* Logo Landing */
   #logoContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     cursor: pointer;
-    z-index: 1;
+    z-index: 10;
+    animation: pulse 2s infinite;
   }
+
+  @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
   #logoContainer img {
     width: 220px;
+    height: auto;
     border-radius: 15px;
     box-shadow: 0 0 30px #00bfff;
     transition: all 0.3s ease;
   }
 
-  #logoContainer img:hover {
-    box-shadow: 0 0 60px #00bfff;
-  }
+  #logoContainer img:hover { box-shadow: 0 0 60px #00bfff; }
 
   #logoContainer p {
     margin-top: 15px;
     font-size: 18px;
-    color: #00bfff;
+    color: #00ffff;
     text-shadow: 1px 1px 5px #000;
+    animation: shimmer 2.5s infinite linear;
   }
 
+  @keyframes shimmer { 0% { opacity:0.5; } 50% { opacity:1; } 100% { opacity:0.5; } }
+
+  /* Glow behind form */
+  .glow {
+    position: absolute;
+    width: 420px;
+    height: 520px;
+    border-radius: 25px;
+    background: rgba(0,191,255,0.1);
+    filter: blur(25px);
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulseGlow 2s infinite alternate;
+  }
+
+  @keyframes pulseGlow { 0% { opacity: 0.3; } 100% { opacity: 0.6; } }
+
+  /* Form Container */
   .form-container {
     background: rgba(0,0,0,0.95);
     padding: 40px;
@@ -61,144 +88,187 @@
     width: 400px;
     text-align: center;
     position: absolute;
-    top: 50%;
+    top: -100%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
     opacity: 0;
     pointer-events: none;
-    transition: all 0.8s ease;
-    z-index: 2;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: all 1s ease;
+    z-index: 10;
   }
 
   .form-container.show {
     opacity: 1;
     pointer-events: auto;
-    transform: translate(-50%, -50%) scale(1);
+    animation: formDropBounce 0.8s ease forwards;
   }
 
-  input, button {
+  @keyframes formDropBounce {
+    0% { top: -100%; transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+    60% { top: 50%; transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+    80% { top: 48%; transform: translate(-50%, -50%) scale(0.98); }
+    100% { top: 50%; transform: translate(-50%, -50%) scale(1); }
+  }
+
+  h1 { color: #00bfff; font-size: 28px; margin-bottom: 25px; text-shadow: 2px 2px 15px #000; }
+
+  input, select {
     width: 100%;
-    padding: 12px;
-    margin: 10px 0;
+    padding: 14px;
+    margin: 12px 0;
     border-radius: 10px;
     border: none;
+    outline: none;
     font-size: 15px;
-  }
-
-  input {
+    transition: all 0.3s ease;
     background: rgba(255,255,255,0.1);
     color: #fff;
   }
 
-  input::placeholder {
-    color: #aaa;
-  }
-
-  input:focus {
-    background: rgba(0,191,255,0.2);
-    box-shadow: 0 0 20px #00bfff;
-    transform: scale(1.02);
-  }
+  input::placeholder { color: #aaa; }
+  input:focus, select:focus { background: rgba(0,191,255,0.2); box-shadow: 0 0 20px #00bfff; transform: scale(1.02); }
 
   button {
-    background: #00bfff;
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    background-color: #00bfff;
     color: #000;
     font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
+    transition: all 0.3s ease;
     box-shadow: 0 0 15px #00bfff;
-    transition: 0.3s ease;
+    position: relative;
+    overflow: hidden;
   }
 
-  button:hover {
-    background: #1e90ff;
-    color: #fff;
-    box-shadow: 0 0 40px #00bfff, 0 0 60px #1e90ff inset;
+  button:hover { background-color: #1e90ff; color: #fff; box-shadow: 0 0 40px #00bfff, 0 0 60px #1e90ff inset; transform: translateY(-2px); }
+
+  button.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
-  .success {
-    color: #00ff99;
-    margin-top: 10px;
-    display: none;
-  }
+  @keyframes spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-  #backButton {
-    margin-top: 10px;
-    background: rgba(255,255,255,0.1);
-    color: #00bfff;
-    border: 1px solid #00bfff;
-  }
+  #backButton { margin-top: 10px; padding: 10px; font-size: 14px; background: rgba(255,255,255,0.1); color: #00bfff; border: 1px solid #00bfff; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+  #backButton:hover { background: #00bfff; color: #000; box-shadow: 0 0 15px #00bfff; }
 
-  #backButton:hover {
-    background: #00bfff;
-    color: #000;
-  }
+  .success { margin-top: 15px; font-weight: bold; color: #00ff99; opacity: 0; transform: translateY(-10px); transition: all 0.5s ease; }
+  .success.show { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
 
+<div id="particles"></div>
+
+<!-- Logo Landing -->
 <div id="logoContainer">
   <img src="https://media.discordapp.net/attachments/1397650991452651620/1449647139264135294/VBLL_New_Logo.png" alt="VBLL Logo">
   <p>Click the logo to access the form</p>
 </div>
 
+<div class="glow"></div>
+
+<!-- Form -->
 <div class="form-container" id="formContainer">
   <h1>VBLL Prize Submission</h1>
   <form id="prizeForm">
-    <input type="text" id="playerId" placeholder="Player ID (e.g., N-958-278)" required>
-    <input type="text" id="discordUser" placeholder="Discord User ID (e.g., 1042887181578027148)" required>
+    <input type="text" id="playerId" placeholder="Player ID" required>
+    <input type="text" id="discordUser" placeholder="Discord Username" required>
     <input type="text" id="itemWon" placeholder="Item Won" required>
     <input type="url" id="messageLink" placeholder="Message Link" required>
-    <button type="submit">Submit</button>
+    <button type="submit" id="submitBtn">Submit</button>
     <button type="button" id="backButton">← Back to Logo</button>
   </form>
   <div class="success" id="successMessage">✅ Submitted successfully!</div>
 </div>
 
 <script>
+// Logo click
 const logoContainer = document.getElementById("logoContainer");
 const formContainer = document.getElementById("formContainer");
 const backButton = document.getElementById("backButton");
+const form = document.getElementById("prizeForm");
 const successMessage = document.getElementById("successMessage");
+const submitBtn = document.getElementById("submitBtn");
 
-// Show form on logo click
-logoContainer.addEventListener("click", () => {
-  logoContainer.style.display = "none";
-  formContainer.classList.add("show");
+logoContainer.addEventListener("click", () => { 
+  logoContainer.style.display = "none"; 
+  formContainer.classList.add("show"); 
+});
+backButton.addEventListener("click", () => { 
+  formContainer.classList.remove("show"); 
+  setTimeout(() => { logoContainer.style.display = "flex"; }, 800); 
 });
 
-// Back to logo
-backButton.addEventListener("click", () => {
-  formContainer.classList.remove("show");
-  setTimeout(() => { logoContainer.style.display = "flex"; }, 800);
-});
+// Particle animation
+const canvas = document.createElement('canvas');
+canvas.id = "particleCanvas";
+document.getElementById('particles').appendChild(canvas);
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let particles = [];
+for(let i=0;i<100;i++){
+  particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r: Math.random()*2+1, dx: (Math.random()-0.5)/1.5, dy:(Math.random()-0.5)/1.5});
+}
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle="rgba(0,191,255,0.4)";
+    ctx.fill();
+    p.x += p.dx; p.y += p.dy;
+    if(p.x<0||p.x>canvas.width)p.dx*=-1;
+    if(p.y<0||p.y>canvas.height)p.dy*=-1;
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
 
-// Form submission
-document.getElementById("prizeForm").addEventListener("submit", async function(e){
+// Webhook submission
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
+
+form.addEventListener("submit", async function(e){
   e.preventDefault();
+  submitBtn.classList.add("loading");
 
   const playerId = document.getElementById("playerId").value;
   const discordUser = document.getElementById("discordUser").value;
   const itemWon = document.getElementById("itemWon").value;
   const messageLink = document.getElementById("messageLink").value;
 
-  const webhookURL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
-
-  try {
-    await fetch(webhookURL, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        content: `${playerId} | <@${discordUser}> | ${itemWon} | ${messageLink}`
-      })
-    });
-    successMessage.style.display = "block";
-    setTimeout(() => { successMessage.style.display = "none"; }, 3000);
-    this.reset();
-  } catch (err) {
-    alert("Failed to submit. Check your webhook URL.");
-  }
+  // Send to Discord webhook in flat layout
+  const content = `${playerId} | ${discordUser} | ${itemWon} | ${messageLink}`;
+  fetch(WEBHOOK_URL, {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({content})
+  }).then(()=>{
+    submitBtn.classList.remove("loading");
+    successMessage.classList.add("show");
+    form.reset();
+    setTimeout(()=>successMessage.classList.remove("show"),4000);
+  }).catch(err=>{
+    submitBtn.classList.remove("loading");
+    alert("Error sending to Discord: "+err);
+  });
 });
 </script>
-
 </body>
 </html>
