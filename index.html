@@ -25,10 +25,8 @@
     100% { background-position: 0% 50%; }
   }
 
-  /* Particles */
   #particles { position: fixed; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
-  /* Logo Landing */
   #logoContainer {
     display: flex;
     justify-content: center;
@@ -37,8 +35,8 @@
     cursor: pointer;
     z-index: 10;
     animation: pulse 2s infinite;
-    position: relative; /* ensure on top of particles */
-    padding: 20px; /* easier click area */
+    position: relative;
+    padding: 20px;
   }
 
   @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
@@ -48,7 +46,8 @@
     height: auto;
     border-radius: 15px;
     box-shadow: 0 0 30px #00bfff;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease, opacity 0.7s ease;
+    opacity: 1;
   }
 
   #logoContainer img:hover { box-shadow: 0 0 60px #00bfff; }
@@ -63,7 +62,6 @@
 
   @keyframes shimmer { 0% { opacity:0.5; } 50% { opacity:1; } 100% { opacity:0.5; } }
 
-  /* Glow behind form */
   .glow {
     position: absolute;
     width: 420px;
@@ -80,7 +78,6 @@
 
   @keyframes pulseGlow { 0% { opacity: 0.3; } 100% { opacity: 0.6; } }
 
-  /* Form Container */
   .form-container {
     background: rgba(0,0,0,0.95);
     padding: 40px;
@@ -96,7 +93,7 @@
     pointer-events: none;
     transform: translate(-50%, -50%) scale(0.8);
     transition: all 1s ease;
-    z-index: 20; /* above everything */
+    z-index: 20;
   }
 
   .form-container.show {
@@ -178,7 +175,7 @@
 
 <!-- Logo Landing -->
 <div id="logoContainer">
-  <img src="https://media.discordapp.net/attachments/1397650991452651620/1449647139264135294/VBLL_New_Logo.png" alt="VBLL Logo">
+  <img src="https://i.imgur.com/tZ2G892.png" alt="VBLL Logo">
   <p>Click the logo to access the form</p>
 </div>
 
@@ -199,7 +196,9 @@
 </div>
 
 <script>
-// Logo click
+// Replace with your direct image URL
+const newLogoURL = "https://i.imgur.com/xxxxx.png"; 
+
 const logoContainer = document.getElementById("logoContainer");
 const formContainer = document.getElementById("formContainer");
 const backButton = document.getElementById("backButton");
@@ -208,8 +207,22 @@ const successMessage = document.getElementById("successMessage");
 const submitBtn = document.getElementById("submitBtn");
 
 logoContainer.addEventListener("click", () => { 
-  logoContainer.style.display = "none"; 
-  formContainer.classList.add("show"); 
+  const img = logoContainer.querySelector("img");
+
+  // Fade out current logo
+  img.style.opacity = 0;
+
+  // Swap image after fade out
+  setTimeout(() => {
+    img.src = newLogoURL;
+    img.style.opacity = 1;
+  }, 400);
+
+  // Show form after fade
+  setTimeout(() => { 
+    logoContainer.style.display = "none"; 
+    formContainer.classList.add("show"); 
+  }, 800);
 });
 
 backButton.addEventListener("click", () => { 
