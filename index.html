@@ -137,8 +137,6 @@ select {
   background-color: #000;
   color: #fff;
   appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   cursor: pointer;
 }
 
@@ -192,12 +190,6 @@ button:hover {
   color: #fff;
   background: linear-gradient(135deg, #5865F2, #404EED);
   box-shadow: 0 0 20px rgba(88,101,242,0.8);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.discord-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(88,101,242,1);
 }
 
 .success {
@@ -243,7 +235,7 @@ button:hover {
       <option>VBLL Blue & White Hat</option>
       <option>VBLL Boot</option>
       <option>VBLL Mask</option>
-      <option> VBLL Goggles</option>
+      <option>VBLL Goggles</option>
       <option>Credits</option>
       <option>Scrim Points</option>
     </select>
@@ -256,10 +248,8 @@ button:hover {
 
   <div class="success" id="successMessage">✅ Submitted successfully!</div>
 
-  <a href="https://discord.gg/vbll"
-     target="_blank"
-     class="discord-btn">
-     Join VBLL Discord
+  <a href="https://discord.gg/vbll" target="_blank" class="discord-btn">
+    Join VBLL Discord
   </a>
 </div>
 
@@ -270,6 +260,12 @@ const backBtn = document.getElementById("backButton");
 const form = document.getElementById("prizeForm");
 const success = document.getElementById("successMessage");
 const submitBtn = document.getElementById("submitBtn");
+
+/* ✅ FIX: define inputs */
+const playerId = document.getElementById("playerId");
+const discordUser = document.getElementById("discordUser");
+const itemWon = document.getElementById("itemWon");
+const messageLink = document.getElementById("messageLink");
 
 logo.onclick = () => {
   logo.style.display = "none";
@@ -290,7 +286,7 @@ function confetti() {
     c.style.left = Math.random() * innerWidth + "px";
     c.style.background = `hsl(${Math.random()*360},100%,50%)`;
     document.body.appendChild(c);
-    c.animate([{top:"0px"},{top:innerHeight+"px"}], {
+    c.animate([{top:"-10px"},{top:innerHeight+"px"}], {
       duration: 3000 + Math.random()*2000
     }).onfinish = () => c.remove();
   }
@@ -299,19 +295,32 @@ function confetti() {
 form.onsubmit = e => {
   e.preventDefault();
   submitBtn.classList.add("loading");
+  submitBtn.disabled = true;
 
-  const content = `${playerId.value} | ${discordUser.value} | ${itemWon.value} | ${messageLink.value}`;
+  const content =
+    `${playerId.value.trim()} | ` +
+    `${discordUser.value.trim()} | ` +
+    `${itemWon.value} | ` +
+    `${messageLink.value.trim()}`;
 
   fetch(WEBHOOK_URL, {
     method: "POST",
     headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({content})
-  }).then(() => {
+    body: JSON.stringify({ content })
+  })
+  .then(res => {
+    if (!res.ok) throw new Error();
     submitBtn.classList.remove("loading");
+    submitBtn.disabled = false;
     success.classList.add("show");
     confetti();
     form.reset();
-    setTimeout(()=>success.classList.remove("show"),4000);
+    setTimeout(() => success.classList.remove("show"), 4000);
+  })
+  .catch(() => {
+    submitBtn.classList.remove("loading");
+    submitBtn.disabled = false;
+    alert("❌ Submission failed. Please try again.");
   });
 };
 </script>
