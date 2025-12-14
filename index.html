@@ -37,6 +37,8 @@
     cursor: pointer;
     z-index: 10;
     animation: pulse 2s infinite;
+    position: relative; /* ensure on top of particles */
+    padding: 20px; /* easier click area */
   }
 
   @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
@@ -94,7 +96,7 @@
     pointer-events: none;
     transform: translate(-50%, -50%) scale(0.8);
     transition: all 1s ease;
-    z-index: 10;
+    z-index: 20; /* above everything */
   }
 
   .form-container.show {
@@ -209,6 +211,7 @@ logoContainer.addEventListener("click", () => {
   logoContainer.style.display = "none"; 
   formContainer.classList.add("show"); 
 });
+
 backButton.addEventListener("click", () => { 
   formContainer.classList.remove("show"); 
   setTimeout(() => { logoContainer.style.display = "flex"; }, 800); 
@@ -253,7 +256,6 @@ form.addEventListener("submit", async function(e){
   const itemWon = document.getElementById("itemWon").value;
   const messageLink = document.getElementById("messageLink").value;
 
-  // Send to Discord webhook in flat layout
   const content = `${playerId} | ${discordUser} | ${itemWon} | ${messageLink}`;
   fetch(WEBHOOK_URL, {
     method:"POST",
