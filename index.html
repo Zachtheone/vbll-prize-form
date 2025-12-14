@@ -1,291 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VBLL Prize Submission</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(135deg, #0b0f2f, #1e3a8a, #000d1a);
-      background-size: 400% 400%;
-      animation: bgAnimation 30s ease infinite;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VBLL Prize Submission</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(135deg, #0b0f2f, #1e3a8a, #000d1a);
+    background-size: 400% 400%;
+    animation: bgAnimation 30s ease infinite;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 
-    @keyframes bgAnimation {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+  @keyframes bgAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-    /* Landing Logo */
-    #logoContainer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      cursor: pointer;
-      z-index: 10;
-      animation: pulse 2s infinite;
-    }
+  /* Particle Background */
+  #particles {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
+  /* Logo Landing */
+  #logoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 10;
+    animation: pulse 2s infinite;
+  }
 
-    #logoContainer img {
-      width: 220px;
-      height: auto;
-      box-shadow: 0 0 30px #00bfff;
-      border-radius: 15px;
-      transition: all 0.3s ease;
-    }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
 
-    #logoContainer img:hover {
-      box-shadow: 0 0 60px #00bfff;
-    }
+  #logoContainer img {
+    width: 220px;
+    height: auto;
+    box-shadow: 0 0 30px #00bfff;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+  }
 
-    #logoContainer p {
-      margin-top: 15px;
-      font-size: 18px;
-      text-shadow: 1px 1px 5px #000;
-      background: linear-gradient(90deg, #00bfff, #1e90ff, #00ffff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 2.5s infinite;
-    }
+  #logoContainer img:hover {
+    box-shadow: 0 0 60px #00bfff;
+  }
 
-    @keyframes shimmer {
-      0% { background-position: -200px; }
-      100% { background-position: 200px; }
-    }
+  #logoContainer p {
+    margin-top: 15px;
+    font-size: 18px;
+    text-shadow: 1px 1px 5px #000;
+    background: linear-gradient(90deg, #00bfff, #1e90ff, #00ffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 2.5s infinite;
+  }
 
-    /* Form Container */
-    .form-container {
-      background: rgba(0,0,0,0.9);
-      padding: 40px;
-      border-radius: 20px;
-      border: 2px solid #00bfff;
-      box-shadow: 0 0 50px #00bfff, 0 0 100px #1e90ff inset;
-      width: 400px;
-      text-align: center;
-      position: absolute;
-      right: -500px;
-      opacity: 0;
-      transition: all 1s ease;
-      pointer-events: none;
-      transform: scale(0.95);
-    }
+  @keyframes shimmer {
+    0% { background-position: -200px; }
+    100% { background-position: 200px; }
+  }
 
-    .form-container.show {
-      right: 0;
-      opacity: 1;
-      pointer-events: auto;
-      transform: scale(1);
-      animation: formBounce 0.8s ease forwards;
-    }
+  /* Neon Glow Behind Form */
+  .glow {
+    position: absolute;
+    width: 420px;
+    height: 520px;
+    border-radius: 25px;
+    background: rgba(0,191,255,0.1);
+    filter: blur(25px);
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulseGlow 2s infinite alternate;
+  }
 
-    @keyframes formBounce {
-      0% { transform: translateX(100%) scale(0.9); opacity: 0; }
-      60% { transform: translateX(-10px) scale(1.02); opacity: 1; }
-      80% { transform: translateX(5px) scale(0.99); }
-      100% { transform: translateX(0) scale(1); }
-    }
+  @keyframes pulseGlow {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.6; }
+  }
 
-    h1 {
-      color: #00bfff;
-      font-size: 28px;
-      margin-bottom: 25px;
-      text-shadow: 2px 2px 15px #000;
-    }
+  /* Form Container */
+  .form-container {
+    background: rgba(0,0,0,0.95);
+    padding: 40px;
+    border-radius: 20px;
+    border: 2px solid #00bfff;
+    box-shadow: 0 0 50px #00bfff, 0 0 100px #1e90ff inset;
+    width: 400px;
+    text-align: center;
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: all 1s ease;
+    z-index: 10;
+  }
 
-    input {
-      width: 100%;
-      padding: 14px;
-      margin: 12px 0;
-      border-radius: 10px;
-      border: none;
-      outline: none;
-      font-size: 15px;
-      transition: all 0.3s ease;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-    }
+  .form-container.show {
+    opacity: 1;
+    pointer-events: auto;
+    animation: formDropBounce 0.8s ease forwards;
+  }
 
-    input::placeholder { color: #aaa; }
+  @keyframes formDropBounce {
+    0% { top: -100%; transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+    60% { top: 50%; transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+    80% { top: 48%; transform: translate(-50%, -50%) scale(0.98); }
+    100% { top: 50%; transform: translate(-50%, -50%) scale(1); }
+  }
 
-    input:focus {
-      background: rgba(0,191,255,0.2);
-      box-shadow: 0 0 20px #00bfff;
-      transform: scale(1.02);
-    }
+  h1 { color: #00bfff; font-size: 28px; margin-bottom: 25px; text-shadow: 2px 2px 15px #000; }
 
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 15px;
-      background-color: #00bfff;
-      color: #000;
-      font-weight: bold;
-      font-size: 16px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 15px #00bfff;
-      position: relative;
-      overflow: hidden;
-    }
+  input {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+  }
 
-    button:hover {
-      background-color: #1e90ff;
-      color: #fff;
-      box-shadow: 0 0 40px #00bfff, 0 0 60px #1e90ff inset;
-      transform: translateY(-2px);
-    }
+  input::placeholder { color: #aaa; }
 
-    /* Loading animation */
-    button.loading::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border: 3px solid #fff;
-      border-top: 3px solid transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+  input:focus { background: rgba(0,191,255,0.2); box-shadow: 0 0 20px #00bfff; transform: scale(1.02); }
 
-    @keyframes spin {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
+  input:nth-child(1) { animation: inputFade 0.5s 0.1s forwards; opacity: 0; }
+  input:nth-child(2) { animation: inputFade 0.5s 0.2s forwards; opacity: 0; }
+  input:nth-child(3) { animation: inputFade 0.5s 0.3s forwards; opacity: 0; }
+  input:nth-child(4) { animation: inputFade 0.5s 0.4s forwards; opacity: 0; }
+  @keyframes inputFade { to { opacity: 1; } }
 
-    #backButton {
-      margin-top: 10px;
-      padding: 10px;
-      font-size: 14px;
-      background: rgba(255,255,255,0.1);
-      color: #00bfff;
-      border: 1px solid #00bfff;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+  button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    background-color: #00bfff;
+    color: #000;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px #00bfff;
+    position: relative;
+    overflow: hidden;
+  }
 
-    #backButton:hover {
-      background: #00bfff;
-      color: #000;
-      box-shadow: 0 0 15px #00bfff;
-    }
+  button:hover { background-color: #1e90ff; color: #fff; box-shadow: 0 0 40px #00bfff, 0 0 60px #1e90ff inset; transform: translateY(-2px); }
 
-    .success {
-      margin-top: 15px;
-      font-weight: bold;
-      color: #00ff99;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: all 0.5s ease;
-    }
+  button.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-    .success.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  @keyframes spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-  </style>
+  #backButton { margin-top: 10px; padding: 10px; font-size: 14px; background: rgba(255,255,255,0.1); color: #00bfff; border: 1px solid #00bfff; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+
+  #backButton:hover { background: #00bfff; color: #000; box-shadow: 0 0 15px #00bfff; }
+
+  .success { margin-top: 15px; font-weight: bold; color: #00ff99; opacity: 0; transform: translateY(-10px); transition: all 0.5s ease; }
+
+  .success.show { opacity: 1; transform: translateY(0); }
+</style>
 </head>
 <body>
 
-  <!-- Logo Landing -->
-  <div id="logoContainer">
-    <img src="https://media.discordapp.net/attachments/1400092797645881394/1420568261468098620/VBLL_New_Logo.png?ex=693f56ca&is=693e054a&hm=6cd396145c9b732cdd447d85e227861045286e62a5f66ab32fdf31e21ca0b872&=&format=png&quality=lossless" alt="VBLL Logo">
-    <p>Click the logo to access the form</p>
-  </div>
+<div id="particles"></div>
 
-  <!-- Form -->
-  <div class="form-container" id="formContainer">
-    <h1>VBLL Prize Submission</h1>
-    <form id="prizeForm">
-      <input type="text" id="playerId" placeholder="Player ID" required>
-      <input type="text" id="discordUser" placeholder="Discord Username" required>
-      <input type="text" id="itemWon" placeholder="Item Won" required>
-      <input type="url" id="messageLink" placeholder="Message Link" required>
-      <button type="submit" id="submitBtn">Submit</button>
-      <button type="button" id="backButton">← Back to Logo</button>
-    </form>
-    <div class="success" id="successMessage">✅ Submitted successfully!</div>
-  </div>
+<!-- Logo Landing -->
+<div id="logoContainer">
+  <img src="https://media.discordapp.net/attachments/1400092797645881394/1420568261468098620/VBLL_New_Logo.png?ex=693f56ca&is=693e054a&hm=6cd396145c9b732cdd447d85e227861045286e62a5f66ab32fdf31e21ca0b872&=&format=png&quality=lossless" alt="VBLL Logo">
+  <p>Click the logo to access the form</p>
+</div>
 
-  <script>
-    const logoContainer = document.getElementById("logoContainer");
-    const formContainer = document.getElementById("formContainer");
-    const form = document.getElementById("prizeForm");
-    const successMessage = document.getElementById("successMessage");
-    const backButton = document.getElementById("backButton");
-    const submitBtn = document.getElementById("submitBtn");
+<div class="glow"></div>
 
-    // Show form with bounce
-    logoContainer.addEventListener("click", () => {
-      logoContainer.style.display = "none";
-      formContainer.classList.add("show");
-    });
+<!-- Form -->
+<div class="form-container" id="formContainer">
+  <h1>VBLL Prize Submission</h1>
+  <form id="prizeForm">
+    <input type="text" id="playerId" placeholder="Player ID" required>
+    <input type="text" id="discordUser" placeholder="Discord Username" required>
+    <input type="text" id="itemWon" placeholder="Item Won" required>
+    <input type="url" id="messageLink" placeholder="Message Link" required>
+    <button type="submit" id="submitBtn">Submit</button>
+    <button type="button" id="backButton">← Back to Logo</button>
+  </form>
+  <div class="success" id="successMessage">✅ Submitted successfully!</div>
+</div>
 
-    // Back to logo
-    backButton.addEventListener("click", () => {
-      formContainer.classList.remove("show");
-      setTimeout(() => {
-        logoContainer.style.display = "flex";
-      }, 800);
-    });
+<script>
+const logoContainer = document.getElementById("logoContainer");
+const formContainer = document.getElementById("formContainer");
+const form = document.getElementById("prizeForm");
+const successMessage = document.getElementById("successMessage");
+const backButton = document.getElementById("backButton");
+const submitBtn = document.getElementById("submitBtn");
 
-    // Submit to Discord webhook with loading animation
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-      submitBtn.classList.add("loading");
+// Particle background
+const canvas = document.createElement('canvas');
+canvas.id = "particleCanvas";
+document.getElementById('particles').appendChild(canvas);
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let particles = [];
+for(let i=0;i<100;i++){
+  particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r: Math.random()*2+1, dx: (Math.random()-0.5)/1.5, dy:(Math.random()-0.5)/1.5});
+}
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle="rgba(0,191,255,0.4)";
+    ctx.fill();
+    p.x += p.dx; p.y += p.dy;
+    if(p.x<0||p.x>canvas.width)p.dx*=-1;
+    if(p.y<0||p.y>canvas.height)p.dy*=-1;
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
 
-      const playerId = document.getElementById("playerId").value;
-      const discordUser = document.getElementById("discordUser").value;
-      const itemWon = document.getElementById("itemWon").value;
-      const messageLink = document.getElementById("messageLink").value;
+// Show form with animation
+logoContainer.addEventListener("click", () => { logoContainer.style.display = "none"; formContainer.classList.add("show"); });
+backButton.addEventListener("click", () => { formContainer.classList.remove("show"); setTimeout(() => { logoContainer.style.display = "flex"; }, 800); });
 
-      fetch("YOUR_DISCORD_WEBHOOK_URL", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content:
-`🏆 **VBLL Prize Log**
-**Player ID:** ${playerId}
-**Discord User:** ${discordUser}
-**Item Won:** ${itemWon}
-**Message Link:** ${messageLink}`
-        })
-      })
-      .then(() => {
-        submitBtn.classList.remove("loading");
-        successMessage.classList.add("show");
-        form.reset();
-        setTimeout(() => successMessage.classList.remove("show"), 4000);
-      })
-      .catch(err => {
-        submitBtn.classList.remove("loading");
-        alert("Error: " + err);
-      });
-    });
-  </script>
-
+// Submit form
+form.addEventListener("submit", function(e){
+  e.preventDefault();
+  submitBtn.classList.add("loading");
+  const playerId = document.getElementById("playerId").value;
+  const discordUser = document.getElementById("discordUser").value;
+  const itemWon = document.getElementById("itemWon").value;
+  const messageLink = document.getElementById("messageLink").value;
+  fetch("YOUR_DISCORD_WEBHOOK_URL", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({content:`🏆 **VBLL Prize Log**\n**Player ID:** ${playerId}\n**Discord User:** ${discordUser}\n**Item Won:** ${itemWon}\n**Message Link:** ${messageLink}`})
+  }).then(()=>{
+    submitBtn.classList.remove("loading");
+    successMessage.classList.add("show");
+    form.reset();
+    setTimeout(()=>successMessage.classList.remove("show"),4000);
+  }).catch(err=>{submitBtn.classList.remove("loading"); alert("Error: "+err);});
+});
+</script>
 </body>
 </html>
-
