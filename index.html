@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VBLL Prize Submission</title>
+</head>
+<body>
+
+<h2>VBLL Prize Submission</h2>
+
+<form id="prizeForm">
+  <input type="text" id="playerId" placeholder="Player ID" required><br><br>
+  <input type="text" id="discordUser" placeholder="Discord Username" required><br><br>
+  <input type="text" id="itemWon" placeholder="Item Won" required><br><br>
+  <input type="url" id="messageLink" placeholder="Message Link" required><br><br>
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+document.getElementById("prizeForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  fetch("YOUR_DISCORD_WEBHOOK_URL", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      content:
+`🏆 **VBLL Prize Log**
+**Player ID:** ${playerId.value}
+**Discord:** ${discordUser.value}
+**Item Won:** ${itemWon.value}
+**Message:** ${messageLink.value}`
+    })
+  }).then(() => alert("Submitted!"));
+});
+</script>
+
+</body>
+</html>
