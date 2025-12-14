@@ -219,8 +219,8 @@ backBtn.onclick = () => {
   setTimeout(() => logo.style.display = "flex", 700);
 };
 
-// ✅ Updated: use your Pipedream URL
-const WEBHOOK_URL = "https://eounof8zpanpbbc.m.pipedream.net";
+// ✅ Updated: Discord webhook
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
 
 function confetti() {
   for (let i = 0; i < 100; i++) {
@@ -263,7 +263,7 @@ form.onsubmit = e => {
   .catch(() => {
     submitBtn.classList.remove("loading");
     submitBtn.disabled = false;
-    alert("❌ Submission failed. Please try again.");
+    alert("❌ Submission failed. This can happen due to Discord CORS restrictions when sending from a browser. Try using a server-side proxy.");
   });
 };
 </script>
