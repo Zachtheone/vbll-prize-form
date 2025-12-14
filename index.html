@@ -106,10 +106,9 @@ input, select {
 
 input::placeholder { color: #aaa; }
 
-select { border: 1px solid #00bfff; background-color: #000; color: #fff; appearance: none; cursor: pointer; }
-
+/* Dropdown fixed: black background and white text */
+select { border: 1px solid #00bfff; background-color: #000; color: #fff; appearance: none; -webkit-appearance: none; -moz-appearance: none; cursor: pointer; }
 select option { background-color: #000; color: #fff; }
-
 select option:hover, select option:checked { background-color: #1e90ff; color: #fff; }
 
 input:focus, select:focus { outline: none; box-shadow: 0 0 20px #00bfff; }
@@ -143,8 +142,10 @@ button:hover { background: #1e90ff; color: white; }
 }
 
 .success { margin-top: 15px; color: #00ff99; opacity: 0; transition: .5s; }
-
 .success.show { opacity: 1; }
+
+.error { margin-top: 15px; color: #ff4d4d; opacity: 0; transition: .5s; }
+.error.show { opacity: 1; }
 
 .confetti-piece {
   position: fixed;
@@ -177,7 +178,7 @@ button:hover { background: #1e90ff; color: white; }
       <option disabled selected>Item Won</option>
       <option>VBLL Blue & White Hat</option>
       <option>VBLL Boot</option>
-      <option>VBLL Mask</option>
+      <option>Vbll Blue & White Mask</option>
       <option>VBLL Goggles</option>
       <option>Credits</option>
       <option>Scrim Points</option>
@@ -190,6 +191,7 @@ button:hover { background: #1e90ff; color: white; }
   </form>
 
   <div class="success" id="successMessage">✅ Submitted successfully!</div>
+  <div class="error" id="errorMessage">❌ Submission failed. Please try again.</div>
 
   <a href="https://discord.gg/vbll" target="_blank" class="discord-btn">
     Join VBLL Discord
@@ -202,6 +204,7 @@ const formBox = document.getElementById("formContainer");
 const backBtn = document.getElementById("backButton");
 const form = document.getElementById("prizeForm");
 const success = document.getElementById("successMessage");
+const error = document.getElementById("errorMessage");
 const submitBtn = document.getElementById("submitBtn");
 
 const playerId = document.getElementById("playerId");
@@ -219,7 +222,7 @@ backBtn.onclick = () => {
   setTimeout(() => logo.style.display = "flex", 700);
 };
 
-// ✅ Updated: use your Pipedream URL
+// Use your Pipedream URL or Discord Webhook URL
 const WEBHOOK_URL = "https://eounof8zpanpbbc.m.pipedream.net";
 
 function confetti() {
@@ -252,9 +255,15 @@ form.onsubmit = e => {
     body: JSON.stringify({ content })
   })
   .then(res => {
-    if (!res.ok) throw new Error();
     submitBtn.classList.remove("loading");
     submitBtn.disabled = false;
+
+    if (!res.ok) {
+      error.classList.add("show");
+      setTimeout(() => error.classList.remove("show"), 4000);
+      throw new Error("Webhook submission failed");
+    }
+
     success.classList.add("show");
     confetti();
     form.reset();
@@ -263,7 +272,8 @@ form.onsubmit = e => {
   .catch(() => {
     submitBtn.classList.remove("loading");
     submitBtn.disabled = false;
-    alert("❌ Submission failed. Please try again.");
+    error.classList.add("show");
+    setTimeout(() => error.classList.remove("show"), 4000);
   });
 };
 </script>
