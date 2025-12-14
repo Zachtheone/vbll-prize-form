@@ -27,14 +27,6 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-#particles {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
-
 #logoContainer {
   display: flex;
   flex-direction: column;
@@ -132,7 +124,6 @@ input::placeholder {
   color: #aaa;
 }
 
-/* 🔧 FIXED PC DROPDOWN STYLING */
 select {
   border: 1px solid #00bfff;
   background-color: #000;
@@ -206,8 +197,6 @@ button:hover {
 
 <body>
 
-<div id="particles"></div>
-
 <div id="logoContainer">
   <img src="https://i.imgur.com/x9a5rrp.png">
   <p>Click the logo to access the form</p>
@@ -248,6 +237,14 @@ const form = document.getElementById("prizeForm");
 const success = document.getElementById("successMessage");
 const submitBtn = document.getElementById("submitBtn");
 
+const playerId = document.getElementById("playerId");
+const discordUser = document.getElementById("discordUser");
+const itemWon = document.getElementById("itemWon");
+const messageLink = document.getElementById("messageLink");
+
+// 🔹 Pipedream URL
+const WEBHOOK_URL = "https://eounof8zpanpbbc.m.pipedream.net";
+
 logo.onclick = () => {
   logo.style.display = "none";
   formBox.classList.add("show");
@@ -257,8 +254,6 @@ backBtn.onclick = () => {
   formBox.classList.remove("show");
   setTimeout(() => logo.style.display = "flex", 700);
 };
-
-const WEBHOOK_URL = "PASTE_WEBHOOK_HERE";
 
 function confetti() {
   for (let i = 0; i < 100; i++) {
@@ -275,20 +270,30 @@ function confetti() {
 
 form.onsubmit = e => {
   e.preventDefault();
-  submitBtn.classList.add("loading");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting...";
 
-  const content = `${playerId.value} | ${discordUser.value} | ${itemWon.value} | ${messageLink.value}`;
+  const content = `${playerId.value.trim()} | ${discordUser.value.trim()} | ${itemWon.value} | ${messageLink.value.trim()}`;
 
   fetch(WEBHOOK_URL, {
     method: "POST",
     headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({content})
-  }).then(() => {
-    submitBtn.classList.remove("loading");
+    body: JSON.stringify({ content })
+  })
+  .then(res => {
+    if (!res.ok) throw new Error("Failed");
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Submit";
     success.classList.add("show");
     confetti();
     form.reset();
-    setTimeout(()=>success.classList.remove("show"),4000);
+    setTimeout(() => success.classList.remove("show"), 4000);
+  })
+  .catch(err => {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Submit";
+    alert("❌ Submission failed. Please try again.");
+    console.error(err);
   });
 };
 </script>
