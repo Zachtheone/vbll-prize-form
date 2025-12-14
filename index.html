@@ -27,7 +27,6 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* Particles */
 #particles {
   position: fixed;
   width: 100%;
@@ -36,7 +35,6 @@ body {
   pointer-events: none;
 }
 
-/* Logo */
 #logoContainer {
   display: flex;
   flex-direction: column;
@@ -70,7 +68,6 @@ body {
   100% { opacity: .5; }
 }
 
-/* Glow */
 .glow {
   position: absolute;
   width: 420px;
@@ -86,7 +83,6 @@ body {
   100% { opacity: .6; }
 }
 
-/* Form */
 .form-container {
   background: rgba(0,0,0,.95);
   padding: 40px;
@@ -121,7 +117,8 @@ h1 {
   margin-bottom: 25px;
 }
 
-input, select {
+input,
+select {
   width: 100%;
   padding: 14px;
   margin: 12px 0;
@@ -135,11 +132,30 @@ input::placeholder {
   color: #aaa;
 }
 
+/* 🔧 FIXED PC DROPDOWN STYLING */
 select {
   border: 1px solid #00bfff;
+  background-color: #000;
+  color: #fff;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
 }
 
-input:focus, select:focus {
+select option {
+  background-color: #000;
+  color: #fff;
+}
+
+select option:hover,
+select option:checked {
+  background-color: #1e90ff;
+  color: #fff;
+}
+
+input:focus,
+select:focus {
   outline: none;
   box-shadow: 0 0 20px #00bfff;
 }
@@ -161,24 +177,6 @@ button:hover {
   color: white;
 }
 
-button.loading::after {
-  content: '';
-  width: 20px;
-  height: 20px;
-  border: 3px solid white;
-  border-top: 3px solid transparent;
-  border-radius: 50%;
-  position: absolute;
-  animation: spin 1s linear infinite;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
 #backButton {
   background: transparent;
   color: #00bfff;
@@ -196,7 +194,6 @@ button.loading::after {
   opacity: 1;
 }
 
-/* Confetti */
 .confetti-piece {
   position: fixed;
   width: 10px;
@@ -229,7 +226,7 @@ button.loading::after {
       <option>VBLL Blue & White Hat</option>
       <option>VBLL Boot</option>
       <option>VBLL Mask</option>
-      <option>Goggles</option>
+      <option>VBLL Goggles</option>
       <option>Credits</option>
       <option>Scrim Points</option>
     </select>
