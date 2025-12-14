@@ -4,269 +4,320 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VBLL Prize Submission</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-
 <style>
-body {
-  margin: 0;
-  font-family: 'Orbitron', sans-serif;
-  background: linear-gradient(135deg, #0b0f2f, #1e3a8a, #000d1a);
-  background-size: 400% 400%;
-  animation: bgAnimation 30s ease infinite;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: hidden;
-}
+  body {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(135deg, #0b0f2f, #1e3a8a, #000d1a);
+    background-size: 400% 400%;
+    animation: bgAnimation 30s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
 
-@keyframes bgAnimation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+  @keyframes bgAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-#particles { position: fixed; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  /* Particles */
+  #particles { position: fixed; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
-#logoContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  z-index: 10;
-  animation: pulse 2s infinite;
-}
+  /* Logo Landing */
+  #logoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 10;
+    animation: pulse 2s infinite;
+    position: relative;
+    padding: 20px;
+  }
 
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+  @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-#logoContainer img {
-  width: 220px;
-  border-radius: 15px;
-  box-shadow: 0 0 30px #00bfff;
-}
+  #logoContainer img {
+    width: 220px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 30px #00bfff;
+    transition: all 0.3s ease;
+  }
 
-#logoContainer p {
-  margin-top: 15px;
-  color: #00ffff;
-  animation: shimmer 2.5s infinite;
-}
+  #logoContainer img:hover { box-shadow: 0 0 60px #00bfff; }
 
-@keyframes shimmer { 0% { opacity: .5; } 50% { opacity: 1; } 100% { opacity: .5; } }
+  #logoContainer p {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #00ffff;
+    text-shadow: 1px 1px 5px #000;
+    animation: shimmer 2.5s infinite linear;
+  }
 
-.glow {
-  position: absolute;
-  width: 420px;
-  height: 520px;
-  border-radius: 25px;
-  background: rgba(0,191,255,0.15);
-  filter: blur(25px);
-  animation: pulseGlow 2s infinite alternate;
-}
+  @keyframes shimmer { 0% { opacity:0.5; } 50% { opacity:1; } 100% { opacity:0.5; } }
 
-@keyframes pulseGlow { 0% { opacity: .3; } 100% { opacity: .6; } }
+  /* Glow behind form */
+  .glow {
+    position: absolute;
+    width: 420px;
+    height: 520px;
+    border-radius: 25px;
+    background: rgba(0,191,255,0.1);
+    filter: blur(25px);
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulseGlow 2s infinite alternate;
+  }
 
-.form-container {
-  background: rgba(0,0,0,.95);
-  padding: 40px;
-  border-radius: 20px;
-  border: 2px solid #00bfff;
-  box-shadow: 0 0 50px #00bfff;
-  width: 400px;
-  text-align: center;
-  position: absolute;
-  top: -100%;
-  left: 50%;
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, -50%) scale(.8);
-  transition: all 1s ease;
-  z-index: 20;
-}
+  @keyframes pulseGlow { 0% { opacity: 0.3; } 100% { opacity: 0.6; } }
 
-.form-container.show {
-  opacity: 1;
-  pointer-events: auto;
-  animation: formDrop 0.8s ease forwards;
-}
+  /* Form Container */
+  .form-container {
+    background: rgba(0,0,0,0.95);
+    padding: 40px;
+    border-radius: 20px;
+    border: 2px solid #00bfff;
+    box-shadow: 0 0 50px #00bfff, 0 0 100px #1e90ff inset;
+    width: 400px;
+    text-align: center;
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: all 1s ease;
+    z-index: 20;
+  }
 
-@keyframes formDrop { 0% { top: -100%; } 100% { top: 50%; transform: translate(-50%, -50%) scale(1); } }
+  .form-container.show {
+    opacity: 1;
+    pointer-events: auto;
+    animation: formDropBounce 0.8s ease forwards;
+  }
 
-h1 { color: #00bfff; margin-bottom: 25px; }
+  @keyframes formDropBounce {
+    0% { top: -100%; transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+    60% { top: 50%; transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+    80% { top: 48%; transform: translate(-50%, -50%) scale(0.98); }
+    100% { top: 50%; transform: translate(-50%, -50%) scale(1); }
+  }
 
-input, select {
-  width: 100%;
-  padding: 14px;
-  margin: 12px 0;
-  border-radius: 10px;
-  border: none;
-  background: rgba(255,255,255,.1);
-  color: white;
-}
+  h1 { color: #00bfff; font-size: 28px; margin-bottom: 25px; text-shadow: 2px 2px 15px #000; }
 
-input::placeholder { color: #aaa; }
+  input, select {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+  }
 
-select { border: 1px solid #00bfff; background-color: #000; color: #fff; appearance: none; cursor: pointer; }
+  input::placeholder { color: #aaa; }
 
-select option { background-color: #000; color: #fff; }
+  select {
+    color: #fff;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid #00bfff;
+    height: 45px;
+  }
 
-select option:hover, select option:checked { background-color: #1e90ff; color: #fff; }
+  input:focus, select:focus { background: rgba(0,191,255,0.2); box-shadow: 0 0 20px #00bfff; transform: scale(1.02); }
 
-input:focus, select:focus { outline: none; box-shadow: 0 0 20px #00bfff; }
+  button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    background-color: #00bfff;
+    color: #000;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px #00bfff;
+    position: relative;
+    overflow: hidden;
+  }
 
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 15px;
-  background: #00bfff;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 0 15px #00bfff;
-}
+  button:hover { background-color: #1e90ff; color: #fff; box-shadow: 0 0 40px #00bfff, 0 0 60px #1e90ff inset; transform: translateY(-2px); }
 
-button:hover { background: #1e90ff; color: white; }
+  button.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-#backButton { background: transparent; color: #00bfff; border: 1px solid #00bfff; }
+  @keyframes spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-.discord-btn {
-  display: block;
-  margin-top: 15px;
-  padding: 14px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-  color: #fff;
-  background: linear-gradient(135deg, #5865F2, #404EED);
-  box-shadow: 0 0 20px rgba(88,101,242,0.8);
-}
+  #backButton { margin-top: 10px; padding: 10px; font-size: 14px; background: rgba(255,255,255,0.1); color: #00bfff; border: 1px solid #00bfff; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+  #backButton:hover { background: #00bfff; color: #000; box-shadow: 0 0 15px #00bfff; }
 
-.success { margin-top: 15px; color: #00ff99; opacity: 0; transition: .5s; }
+  .success { margin-top: 15px; font-weight: bold; color: #00ff99; opacity: 0; transform: translateY(-10px); transition: all 0.5s ease; }
+  .success.show { opacity: 1; transform: translateY(0); }
 
-.success.show { opacity: 1; }
-
-.confetti-piece {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  pointer-events: none;
-  z-index: 9999;
-}
+  /* Confetti */
+  .confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: #00ffff;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.9;
+    transform: rotate(0deg);
+  }
 </style>
 </head>
-
 <body>
 
 <div id="particles"></div>
 
+<!-- Logo Landing -->
 <div id="logoContainer">
-  <img src="https://i.imgur.com/x9a5rrp.png">
+  <img src="https://i.imgur.com/x9a5rrp.png" alt="VBLL Logo">
   <p>Click the logo to access the form</p>
 </div>
 
 <div class="glow"></div>
 
+<!-- Form -->
 <div class="form-container" id="formContainer">
   <h1>VBLL Prize Submission</h1>
   <form id="prizeForm">
-    <input id="playerId" placeholder="B-123-123" required>
-    <input id="discordUser" placeholder="Luv.apeks" required>
-
+    <input type="text" id="playerId" placeholder="B-123-123" required>
+    <input type="text" id="discordUser" placeholder="Luv.apeks" required>
     <select id="itemWon" required>
-      <option disabled selected>Item Won</option>
+      <option value="" disabled selected>Item Won</option>
       <option>VBLL Blue & White Hat</option>
       <option>VBLL Boot</option>
-      <option>VBLL Mask</option>
-      <option>VBLL Goggles</option>
+      <option>Goggles</option>
       <option>Credits</option>
       <option>Scrim Points</option>
     </select>
-
-    <input id="messageLink" placeholder="Message link" required>
-
-    <button id="submitBtn">Submit</button>
-    <button type="button" id="backButton">← Back</button>
+    <input type="url" id="messageLink" placeholder="Message link" required>
+    <button type="submit" id="submitBtn">Submit</button>
+    <button type="button" id="backButton">← Back to Logo</button>
   </form>
-
   <div class="success" id="successMessage">✅ Submitted successfully!</div>
-
-  <a href="https://discord.gg/vbll" target="_blank" class="discord-btn">
-    Join VBLL Discord
-  </a>
 </div>
 
 <script>
-const logo = document.getElementById("logoContainer");
-const formBox = document.getElementById("formContainer");
-const backBtn = document.getElementById("backButton");
+// Logo click
+const logoContainer = document.getElementById("logoContainer");
+const formContainer = document.getElementById("formContainer");
+const backButton = document.getElementById("backButton");
 const form = document.getElementById("prizeForm");
-const success = document.getElementById("successMessage");
+const successMessage = document.getElementById("successMessage");
 const submitBtn = document.getElementById("submitBtn");
 
-const playerId = document.getElementById("playerId");
-const discordUser = document.getElementById("discordUser");
-const itemWon = document.getElementById("itemWon");
-const messageLink = document.getElementById("messageLink");
+logoContainer.addEventListener("click", () => { 
+  logoContainer.style.display = "none"; 
+  formContainer.classList.add("show"); 
+});
 
-logo.onclick = () => {
-  logo.style.display = "none";
-  formBox.classList.add("show");
-};
+backButton.addEventListener("click", () => { 
+  formContainer.classList.remove("show"); 
+  setTimeout(() => { logoContainer.style.display = "flex"; }, 800); 
+});
 
-backBtn.onclick = () => {
-  formBox.classList.remove("show");
-  setTimeout(() => logo.style.display = "flex", 700);
-};
+// Particle animation
+const canvas = document.createElement('canvas');
+canvas.id = "particleCanvas";
+document.getElementById('particles').appendChild(canvas);
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let particles = [];
+for(let i=0;i<100;i++){
+  particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r: Math.random()*2+1, dx: (Math.random()-0.5)/1.5, dy:(Math.random()-0.5)/1.5});
+}
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle="rgba(0,191,255,0.4)";
+    ctx.fill();
+    p.x += p.dx; p.y += p.dy;
+    if(p.x<0||p.x>canvas.width)p.dx*=-1;
+    if(p.y<0||p.y>canvas.height)p.dy*=-1;
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
 
-// ✅ Updated: use your Pipedream URL
-const WEBHOOK_URL = "https://eounof8zpanpbbc.m.pipedream.net";
+// Webhook submission
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
 
-function confetti() {
-  for (let i = 0; i < 100; i++) {
-    const c = document.createElement("div");
-    c.className = "confetti-piece";
-    c.style.left = Math.random() * innerWidth + "px";
-    c.style.background = `hsl(${Math.random()*360},100%,50%)`;
-    document.body.appendChild(c);
-    c.animate([{top:"-10px"},{top:innerHeight+"px"}], {
-      duration: 3000 + Math.random()*2000
-    }).onfinish = () => c.remove();
+function createConfetti() {
+  for (let i=0; i<100; i++) {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti-piece');
+    confetti.style.left = Math.random()*window.innerWidth+'px';
+    confetti.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 50%)`;
+    document.body.appendChild(confetti);
+    const fall = confetti.animate([
+      { transform: `translateY(0px) rotate(0deg)` },
+      { transform: `translateY(${window.innerHeight + 20}px) rotate(${Math.random()*360}deg)` }
+    ], {
+      duration: 3000 + Math.random()*2000,
+      iterations: 1,
+      easing: 'ease-out'
+    });
+    fall.onfinish = ()=>confetti.remove();
   }
 }
 
-form.onsubmit = e => {
+form.addEventListener("submit", async function(e){
   e.preventDefault();
   submitBtn.classList.add("loading");
-  submitBtn.disabled = true;
 
-  const content =
-    `${playerId.value.trim()} | ` +
-    `${discordUser.value.trim()} | ` +
-    `${itemWon.value} | ` +
-    `${messageLink.value.trim()}`;
+  const playerId = document.getElementById("playerId").value;
+  const discordUser = document.getElementById("discordUser").value;
+  const itemWon = document.getElementById("itemWon").value;
+  const messageLink = document.getElementById("messageLink").value;
 
+  const content = `${playerId} | ${discordUser} | ${itemWon} | ${messageLink}`;
   fetch(WEBHOOK_URL, {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({ content })
-  })
-  .then(res => {
-    if (!res.ok) throw new Error();
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({content})
+  }).then(()=>{
     submitBtn.classList.remove("loading");
-    submitBtn.disabled = false;
-    success.classList.add("show");
-    confetti();
+    successMessage.classList.add("show");
+    createConfetti(); // trigger confetti
     form.reset();
-    setTimeout(() => success.classList.remove("show"), 4000);
-  })
-  .catch(() => {
+    setTimeout(()=>successMessage.classList.remove("show"),4000);
+  }).catch(err=>{
     submitBtn.classList.remove("loading");
-    submitBtn.disabled = false;
-    alert("❌ Submission failed. Please try again.");
+    alert("Error sending to Discord: "+err);
   });
-};
+});
 </script>
-
 </body>
 </html>
