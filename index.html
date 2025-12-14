@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 <title>VBLL Prize Submission</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
 <style>
@@ -15,95 +15,43 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    overflow-x: hidden;
+    height: 100vh;
+    overflow: hidden;
   }
-
-  @keyframes bgAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
+  @keyframes bgAnimation {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
   #particles { position: fixed; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
+  /* Logo */
   #logoContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    z-index: 10;
-    animation: pulse 2s infinite;
-    position: relative;
-    padding: 30px 20px;
-    text-align: center;
+    display: flex; justify-content: center; align-items: center; flex-direction: column;
+    cursor: pointer; z-index: 10; animation: pulse 2s infinite; position: relative; padding: 20px;
   }
-
-  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-
-  #logoContainer img {
-    width: 70%;
-    max-width: 220px;
-    height: auto;
-    border-radius: 15px;
-    box-shadow: 0 0 30px #00bfff;
-    transition: all 0.3s ease;
-  }
-
+  @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+  #logoContainer img { width: 220px; height: auto; border-radius: 15px; box-shadow: 0 0 30px #00bfff; transition: all 0.3s ease; }
   #logoContainer img:hover { box-shadow: 0 0 60px #00bfff; }
+  #logoContainer p { margin-top: 15px; font-size: 18px; color: #00ffff; text-shadow: 1px 1px 5px #000; animation: shimmer 2.5s infinite linear; }
+  @keyframes shimmer { 0% { opacity:0.5; } 50% { opacity:1; } 100% { opacity:0.5; } }
 
-  #logoContainer p {
-    margin-top: 15px;
-    font-size: 18px;
-    color: #00ffff;
-    text-shadow: 1px 1px 5px #000;
-    animation: shimmer 2.5s infinite linear;
-  }
-
-  @keyframes shimmer { 0%,100% { opacity:0.5; } 50% { opacity:1; } }
-
+  /* Glow behind form */
   .glow {
-    position: absolute;
-    width: 90%;
-    max-width: 420px;
-    height: 520px;
-    border-radius: 25px;
-    background: rgba(0,191,255,0.1);
-    filter: blur(25px);
-    z-index: 5;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: absolute; width: 420px; height: 520px; border-radius: 25px;
+    background: rgba(0,191,255,0.1); filter: blur(25px); z-index: 5;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
     animation: pulseGlow 2s infinite alternate;
   }
+  @keyframes pulseGlow { 0% { opacity: 0.3; } 100% { opacity: 0.6; } }
 
-  @keyframes pulseGlow { 0% { opacity:0.3; } 100% { opacity:0.6; } }
-
+  /* Form */
   .form-container {
-    background: rgba(0,0,0,0.95);
-    padding: 30px 20px;
-    border-radius: 20px;
-    border: 2px solid #00bfff;
-    box-shadow: 0 0 50px #00bfff, 0 0 100px #1e90ff inset;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    position: absolute;
-    top: -100%;
-    left: 50%;
-    opacity: 0;
-    pointer-events: none;
-    transform: translate(-50%, -50%) scale(0.8);
-    transition: all 1s ease;
-    z-index: 20;
+    background: rgba(0,0,0,0.95); padding: 40px; border-radius: 20px;
+    border: 2px solid #00bfff; box-shadow: 0 0 50px #00bfff, 0 0 100px #1e90ff inset;
+    width: 400px; text-align: center; position: absolute; top: -100%; left: 50%;
+    opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(0.8);
+    transition: all 1s ease; z-index: 20;
   }
-
   .form-container.show {
-    opacity: 1;
-    pointer-events: auto;
-    animation: formDropBounce 0.8s ease forwards;
+    opacity: 1; pointer-events: auto; animation: formDropBounce 0.8s ease forwards;
   }
-
   @keyframes formDropBounce {
     0% { top: -100%; transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
     60% { top: 50%; transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
@@ -112,57 +60,21 @@
   }
 
   h1 { color: #00bfff; font-size: 28px; margin-bottom: 25px; text-shadow: 2px 2px 15px #000; }
-
   input, select {
-    width: 100%;
-    padding: 14px;
-    margin: 12px 0;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    font-size: 15px;
-    transition: all 0.3s ease;
-    background: rgba(255,255,255,0.1);
-    color: #fff;
+    width: 100%; padding: 14px; margin: 12px 0; border-radius: 10px; border: none; outline: none;
+    font-size: 15px; transition: all 0.3s ease; background: rgba(255,255,255,0.1); color: #fff;
   }
-
   input::placeholder { color: #aaa; }
   input:focus, select:focus { background: rgba(0,191,255,0.2); box-shadow: 0 0 20px #00bfff; transform: scale(1.02); }
 
   button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 15px;
-    background-color: #00bfff;
-    color: #000;
-    font-weight: bold;
-    font-size: 16px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 15px #00bfff;
-    position: relative;
-    overflow: hidden;
+    width: 100%; padding: 14px; margin-top: 15px; background-color: #00bfff; color: #000; font-weight: bold;
+    font-size: 16px; border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 0 15px #00bfff; position: relative; overflow: hidden;
   }
-
   button:hover { background-color: #1e90ff; color: #fff; box-shadow: 0 0 40px #00bfff, 0 0 60px #1e90ff inset; transform: translateY(-2px); }
-  button:disabled { opacity: 0.6; cursor: not-allowed; }
-
   button.loading::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border: 3px solid #fff;
-    border-top: 3px solid transparent;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    content: ''; position: absolute; width: 20px; height: 20px; border: 3px solid #fff; border-top: 3px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; top: 50%; left: 50%; transform: translate(-50%, -50%);
   }
-
   @keyframes spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
   #backButton { margin-top: 10px; padding: 10px; font-size: 14px; background: rgba(255,255,255,0.1); color: #00bfff; border: 1px solid #00bfff; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
@@ -170,22 +82,6 @@
 
   .success { margin-top: 15px; font-weight: bold; color: #00ff99; opacity: 0; transform: translateY(-10px); transition: all 0.5s ease; }
   .success.show { opacity: 1; transform: translateY(0); }
-
-  @media (max-width: 480px) {
-    h1 { font-size: 22px; }
-    input, button { padding: 12px; font-size: 14px; }
-    #logoContainer p { font-size: 16px; }
-  }
-
-  /* Confetti container */
-  .confetti {
-    pointer-events: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 50;
-    overflow: hidden;
-  }
 </style>
 </head>
 <body>
@@ -204,15 +100,20 @@
   <form id="prizeForm">
     <input type="text" id="playerId" placeholder="B-123-123" required>
     <input type="text" id="discordUser" placeholder="Luv.apeks" required>
-    <input type="text" id="itemWon" placeholder="VBLL BOOT" required>
-    <input type="url" id="messageLink" placeholder="https://" required>
+    <select id="itemWon" required>
+      <option value="" disabled selected>VBLL BOOT</option>
+      <option value="VBLL Blue & White Hat">VBLL Blue & White Hat</option>
+      <option value="VBLL Boot">VBLL Boot</option>
+      <option value="Goggles">Goggles</option>
+      <option value="Credits">Credits</option>
+      <option value="Scrim Points">Scrim Points</option>
+    </select>
+    <input type="url" id="messageLink" placeholder="Message Link" required>
     <button type="submit" id="submitBtn">Submit</button>
     <button type="button" id="backButton">← Back to Logo</button>
   </form>
   <div class="success" id="successMessage">✅ Submitted successfully!</div>
 </div>
-
-<div class="confetti" id="confetti"></div>
 
 <script>
 // Logo click
@@ -222,32 +123,27 @@ const backButton = document.getElementById("backButton");
 const form = document.getElementById("prizeForm");
 const successMessage = document.getElementById("successMessage");
 const submitBtn = document.getElementById("submitBtn");
-const confettiContainer = document.getElementById("confetti");
 
 logoContainer.addEventListener("click", () => {
   logoContainer.style.display = "none";
   formContainer.classList.add("show");
 });
-
 backButton.addEventListener("click", () => {
   formContainer.classList.remove("show");
-  setTimeout(()=> { logoContainer.style.display = "flex"; }, 800);
+  setTimeout(() => { logoContainer.style.display = "flex"; }, 800);
 });
 
-// Particle animation
+// Particles
 const canvas = document.createElement('canvas');
 canvas.id = "particleCanvas";
 document.getElementById('particles').appendChild(canvas);
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-
-let particleCount = window.innerWidth < 768 ? 50 : 100;
 let particles = [];
-for(let i=0;i<particleCount;i++){
+for(let i=0;i<100;i++){
   particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r: Math.random()*2+1, dx: (Math.random()-0.5)/1.5, dy:(Math.random()-0.5)/1.5});
 }
-
 function animateParticles(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   particles.forEach(p=>{
@@ -262,49 +158,35 @@ function animateParticles(){
   requestAnimationFrame(animateParticles);
 }
 animateParticles();
-window.addEventListener('resize',()=>{
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
 
-// Confetti generator
+// Webhook & confetti
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
+
 function createConfetti() {
-  const confettiCount = 100;
-  const colors = ['#ff0','#0ff','#f0f','#0f0','#00f','#f00','#fff'];
-  for(let i=0;i<confettiCount;i++){
-    const div = document.createElement('div');
-    div.style.position='absolute';
-    div.style.width='6px';
-    div.style.height='10px';
-    div.style.background = colors[Math.floor(Math.random()*colors.length)];
-    div.style.top='-10px';
-    div.style.left=Math.random()*window.innerWidth+'px';
-    div.style.opacity=1;
-    div.style.transform='rotate('+Math.random()*360+'deg)';
-    confettiContainer.appendChild(div);
-    (function animateConfetti(el){
-      let top = -10;
-      const fall = Math.random()*3+2;
-      const drift = (Math.random()-0.5)*2;
-      const rotSpeed = (Math.random()-0.5)*10;
-      const interval = setInterval(()=>{
-        top += fall;
-        el.style.top = top+'px';
-        el.style.left = (parseFloat(el.style.left)+drift)+'px';
-        el.style.transform = 'rotate('+(rotSpeed+parseFloat(el.style.transform.replace(/[^\d.]/g,'')))+'deg)';
-        if(top>window.innerHeight){ el.remove(); clearInterval(interval); }
-      },16);
-    })(div);
+  for(let i=0;i<150;i++){
+    const conf = document.createElement('div');
+    conf.style.position='fixed';
+    conf.style.width='8px';
+    conf.style.height='8px';
+    conf.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`;
+    conf.style.left=Math.random()*window.innerWidth+'px';
+    conf.style.top=Math.random()*window.innerHeight+'px';
+    conf.style.opacity='0.8';
+    conf.style.pointerEvents='none';
+    conf.style.transform=`rotate(${Math.random()*360}deg)`;
+    conf.style.animation='fall 3s linear forwards';
+    document.body.appendChild(conf);
+    setTimeout(()=>conf.remove(),3000);
   }
 }
-
-// Webhook
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
+const style = document.createElement('style');
+style.innerHTML='@keyframes fall {0%{transform:translateY(0) rotate(0deg);}100%{transform:translateY(100vh) rotate(720deg);}}';
+document.head.appendChild(style);
 
 form.addEventListener("submit", async function(e){
   e.preventDefault();
   submitBtn.classList.add("loading");
-  submitBtn.disabled = true;
 
   const playerId = document.getElementById("playerId").value;
   const discordUser = document.getElementById("discordUser").value;
@@ -312,20 +194,18 @@ form.addEventListener("submit", async function(e){
   const messageLink = document.getElementById("messageLink").value;
 
   const content = `${playerId} | ${discordUser} | ${itemWon} | ${messageLink}`;
-  fetch(WEBHOOK_URL, {
+  fetch(WEBHOOK_URL,{
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body: JSON.stringify({content})
   }).then(()=>{
     submitBtn.classList.remove("loading");
-    submitBtn.disabled = false;
     successMessage.classList.add("show");
     createConfetti();
     form.reset();
     setTimeout(()=>successMessage.classList.remove("show"),4000);
   }).catch(err=>{
     submitBtn.classList.remove("loading");
-    submitBtn.disabled = false;
     alert("Error sending to Discord: "+err);
   });
 });
