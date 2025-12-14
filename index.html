@@ -12,11 +12,11 @@
     background: linear-gradient(135deg, #0b0f2f, #1e3a8a, #000d1a);
     background-size: 400% 400%;
     animation: bgAnimation 30s ease infinite;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    overflow: hidden;
   }
 
   @keyframes bgAnimation {
@@ -27,18 +27,25 @@
 
   #logoContainer {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    flex-direction: column;
     cursor: pointer;
     z-index: 10;
     animation: pulse 2s infinite;
   }
 
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
   #logoContainer img {
     width: 220px;
     height: auto;
-    border-radius: 15px;
     box-shadow: 0 0 30px #00bfff;
+    border-radius: 15px;
     transition: all 0.3s ease;
   }
 
@@ -53,18 +60,6 @@
     background: linear-gradient(90deg, #00bfff, #1e90ff, #00ffff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: shimmer 2.5s infinite;
-  }
-
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-  }
-
-  @keyframes shimmer {
-    0% { background-position: -200px; }
-    100% { background-position: 200px; }
   }
 
   .form-container {
@@ -78,10 +73,10 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
     opacity: 0;
     pointer-events: none;
-    transition: all 0.5s ease;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: all 0.8s ease;
     z-index: 10;
   }
 
@@ -101,12 +96,13 @@
     border: none;
     outline: none;
     font-size: 15px;
+    transition: all 0.3s ease;
     background: rgba(255,255,255,0.1);
     color: #fff;
-    transition: all 0.3s ease;
   }
 
   input::placeholder { color: #aaa; }
+
   input:focus { background: rgba(0,191,255,0.2); box-shadow: 0 0 20px #00bfff; transform: scale(1.02); }
 
   button {
@@ -120,74 +116,101 @@
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    transition: all 0.3s ease;
     box-shadow: 0 0 15px #00bfff;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
   }
 
   button:hover { background-color: #1e90ff; color: #fff; box-shadow: 0 0 40px #00bfff, 0 0 60px #1e90ff inset; transform: translateY(-2px); }
 
-  .success { margin-top: 15px; font-weight: bold; color: #00ff99; opacity: 0; transition: all 0.5s ease; }
-  .success.show { opacity: 1; }
+  #backButton { margin-top: 10px; padding: 10px; font-size: 14px; background: rgba(255,255,255,0.1); color: #00bfff; border: 1px solid #00bfff; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+
+  #backButton:hover { background: #00bfff; color: #000; box-shadow: 0 0 15px #00bfff; }
+
+  .success { margin-top: 15px; font-weight: bold; color: #00ff99; opacity: 0; transform: translateY(-10px); transition: all 0.5s ease; }
+
+  .success.show { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
 
+<!-- Logo -->
 <div id="logoContainer">
-  <!-- Direct image link from Imgur -->
-  <img src="https://i.imgur.com/k1b7v3R.png" alt="VBLL Logo">
+  <img src="https://cdn.discordapp.com/attachments/1286206719847960670/1449647139725512747/VBLL_Logo.png" alt="VBLL Logo">
   <p>Click the logo to access the form</p>
 </div>
 
+<!-- Form -->
 <div class="form-container" id="formContainer">
   <h1>VBLL Prize Submission</h1>
-  <form id="prizeForm">
+  <form id="prizeForm" action="#" method="POST">
     <input type="text" id="playerId" placeholder="Player ID" required>
     <input type="text" id="discordUser" placeholder="Discord Username" required>
     <input type="text" id="itemWon" placeholder="Item Won" required>
     <input type="url" id="messageLink" placeholder="Message Link" required>
-    <button type="submit">Submit</button>
+    <button type="submit" id="submitBtn">Submit</button>
+    <button type="button" id="backButton">← Back to Logo</button>
   </form>
   <div class="success" id="successMessage">✅ Submitted successfully!</div>
 </div>
 
 <script>
-const logo = document.getElementById("logoContainer");
+const logoContainer = document.getElementById("logoContainer");
 const formContainer = document.getElementById("formContainer");
 const form = document.getElementById("prizeForm");
 const successMessage = document.getElementById("successMessage");
+const backButton = document.getElementById("backButton");
+const submitBtn = document.getElementById("submitBtn");
 
-// Show form on logo click
-logo.addEventListener("click", () => {
-  logo.style.display = "none";
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
+
+// Show form
+logoContainer.addEventListener("click", () => {
+  logoContainer.style.display = "none";
   formContainer.classList.add("show");
 });
 
-// Discord webhook
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
+// Back to logo
+backButton.addEventListener("click", () => {
+  formContainer.classList.remove("show");
+  setTimeout(() => { logoContainer.style.display = "flex"; }, 500);
+});
 
-form.addEventListener("submit", (e) => {
+// Form submit
+form.addEventListener("submit", function(e){
   e.preventDefault();
-  const data = {
-    content: `🏆 **VBLL Prize Log**
-**Player ID:** ${document.getElementById("playerId").value}
-**Discord User:** ${document.getElementById("discordUser").value}
-**Item Won:** ${document.getElementById("itemWon").value}
-**Message Link:** ${document.getElementById("messageLink").value}`
-  };
+  submitBtn.disabled = true;
+  const playerId = document.getElementById("playerId").value;
+  const discordUser = document.getElementById("discordUser").value;
+  const itemWon = document.getElementById("itemWon").value;
+  const messageLink = document.getElementById("messageLink").value;
 
   fetch(WEBHOOK_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  })
-  .then(() => {
+    body: JSON.stringify({
+      embeds: [{
+        title: "🏆 VBLL Prize Submission",
+        color: 3447003,
+        fields: [
+          { name: "Player ID", value: playerId, inline: true },
+          { name: "Discord User", value: discordUser, inline: true },
+          { name: "Item Won", value: itemWon, inline: false },
+          { name: "Message Link", value: `[Click Here](${messageLink})`, inline: false }
+        ],
+        timestamp: new Date()
+      }]
+    })
+  }).then(() => {
     successMessage.classList.add("show");
     form.reset();
+    submitBtn.disabled = false;
     setTimeout(() => successMessage.classList.remove("show"), 4000);
-  })
-  .catch(err => alert("Error: " + err));
+  }).catch(err => {
+    alert("Error: " + err);
+    submitBtn.disabled = false;
+  });
 });
 </script>
 </body>
