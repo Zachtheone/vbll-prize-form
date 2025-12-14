@@ -132,7 +132,6 @@ input::placeholder {
   color: #aaa;
 }
 
-/* 🔧 FIXED PC DROPDOWN STYLING */
 select {
   border: 1px solid #00bfff;
   background-color: #000;
@@ -183,6 +182,24 @@ button:hover {
   border: 1px solid #00bfff;
 }
 
+.discord-btn {
+  display: block;
+  margin-top: 15px;
+  padding: 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(135deg, #5865F2, #404EED);
+  box-shadow: 0 0 20px rgba(88,101,242,0.8);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.discord-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(88,101,242,1);
+}
+
 .success {
   margin-top: 15px;
   color: #00ff99;
@@ -226,7 +243,7 @@ button:hover {
       <option>VBLL Blue & White Hat</option>
       <option>VBLL Boot</option>
       <option>VBLL Mask</option>
-      <option>VBLL Goggles</option>
+      <option> VBLL Goggles</option>
       <option>Credits</option>
       <option>Scrim Points</option>
     </select>
@@ -238,6 +255,12 @@ button:hover {
   </form>
 
   <div class="success" id="successMessage">✅ Submitted successfully!</div>
+
+  <a href="https://discord.gg/vbll"
+     target="_blank"
+     class="discord-btn">
+     Join VBLL Discord
+  </a>
 </div>
 
 <script>
