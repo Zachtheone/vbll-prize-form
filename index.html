@@ -188,7 +188,7 @@ button:hover {
   color: #00ffff;
   display: none;
   white-space: pre-wrap;       /* Wrap long text */
-  word-break: break-word;      /* Break long links */
+  word-break: break-word;      /* Break long words/links */
   background: rgba(0,191,255,0.05);
   border: 1px dashed #00bfff;
   box-shadow: 0 0 20px #00bfff;
@@ -280,17 +280,16 @@ backBtn.onclick = () => {
 // Discord webhook URL
 const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
 
-// Update preview
+// Update preview (line break before message link)
 function updatePreview() {
   let discordName = discordUser.value.trim();
   if (!discordName.startsWith("@")) discordName = "@" + discordName;
 
-  const content = `${playerId.value.trim()} | ${discordName} | ${itemWon.value} 
-${messageLink.value.trim()}`;
+  const previewContent = `${playerId.value.trim()} | ${discordName} | ${itemWon.value}\n+ your message link`;
 
   if (playerId.value && discordUser.value && itemWon.value && messageLink.value) {
     preview.style.display = "block";
-    preview.textContent = content;
+    preview.textContent = previewContent;
   } else {
     preview.style.display = "none";
   }
