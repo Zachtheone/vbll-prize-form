@@ -180,17 +180,28 @@ button:hover {
   opacity: 1;
 }
 
-/* Preview box */
+/* Preview box with glow and word wrap */
 #preview {
   margin-top: 15px;
   padding: 10px;
-  border: 1px dashed #00bfff;
   border-radius: 10px;
   color: #00ffff;
   display: none;
-  white-space: pre-line;
+  white-space: pre-wrap;       /* Wrap long text */
+  word-break: break-word;      /* Break long links */
   background: rgba(0,191,255,0.05);
+  border: 1px dashed #00bfff;
+  box-shadow: 0 0 20px #00bfff;
+  animation: previewPulse 2s infinite alternate;
+  max-height: 200px;
+  overflow-y: auto;
 }
+
+@keyframes previewPulse {
+  0% { box-shadow: 0 0 10px #00bfff; }
+  100% { box-shadow: 0 0 30px #00bfff; }
+}
+
 @media (max-width: 500px) {
   .form-container {
     width: 90%;
