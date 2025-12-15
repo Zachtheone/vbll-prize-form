@@ -179,6 +179,24 @@ button:hover {
 .success.show {
   opacity: 1;
 }
+
+/* Preview box */
+#preview {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px dashed #00bfff;
+  border-radius: 10px;
+  color: #00ffff;
+  display: none;
+  white-space: pre-line;
+  background: rgba(0,191,255,0.05);
+}
+@media (max-width: 500px) {
+  .form-container {
+    width: 90%;
+    padding: 20px;
+  }
+}
 </style>
 </head>
 
@@ -210,6 +228,9 @@ button:hover {
 
     <input id="messageLink" placeholder="Discord message link" required>
 
+    <!-- Preview box -->
+    <div id="preview">Preview will appear here...</div>
+
     <button id="submitBtn">Submit</button>
     <button type="button" id="backButton">← Back</button>
   </form>
@@ -233,6 +254,7 @@ const playerId = document.getElementById("playerId");
 const discordUser = document.getElementById("discordUser");
 const itemWon = document.getElementById("itemWon");
 const messageLink = document.getElementById("messageLink");
+const preview = document.getElementById("preview");
 
 logo.onclick = () => {
   logo.style.display = "none";
@@ -244,8 +266,32 @@ backBtn.onclick = () => {
   setTimeout(() => logo.style.display = "flex", 700);
 };
 
+// Discord webhook URL
 const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
 
+// Update preview
+function updatePreview() {
+  let discordName = discordUser.value.trim();
+  if (!discordName.startsWith("@")) discordName = "@" + discordName;
+
+  const content = `${playerId.value.trim()} | ${discordName} | ${itemWon.value} 
+${messageLink.value.trim()}`;
+
+  if (playerId.value && discordUser.value && itemWon.value && messageLink.value) {
+    preview.style.display = "block";
+    preview.textContent = content;
+  } else {
+    preview.style.display = "none";
+  }
+}
+
+// Update preview on input
+[playerId, discordUser, itemWon, messageLink].forEach(el => {
+  el.addEventListener("input", updatePreview);
+  el.addEventListener("change", updatePreview);
+});
+
+// Form submission
 form.onsubmit = e => {
   e.preventDefault();
 
@@ -264,11 +310,13 @@ form.onsubmit = e => {
     discordName = "@" + discordName;
   }
 
-  const content =
-`${playerId.value.trim()} | ${discordName} | ${itemWon.value} 
+  const content = `${playerId.value.trim()} | ${discordName} | ${itemWon.value} 
 ${messageLink.value.trim()}`;
 
+  if (!confirm(`Are you sure you want to submit:\n\n${content}`)) return;
+
   submitBtn.disabled = true;
+  submitBtn.innerText = "Submitting...";
 
   fetch(WEBHOOK_URL, {
     method: "POST",
@@ -277,12 +325,15 @@ ${messageLink.value.trim()}`;
   })
   .then(() => {
     submitBtn.disabled = false;
+    submitBtn.innerText = "Submit";
     success.classList.add("show");
     form.reset();
+    preview.style.display = "none";
     setTimeout(() => success.classList.remove("show"), 4000);
   })
   .catch(() => {
     submitBtn.disabled = false;
+    submitBtn.innerText = "Submit";
     alert("Submission failed.");
   });
 };
