@@ -27,8 +27,6 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-#particles { position: fixed; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-
 #logoContainer {
   display: flex;
   flex-direction: column;
@@ -38,7 +36,11 @@ body {
   animation: pulse 2s infinite;
 }
 
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
 
 #logoContainer img {
   width: 220px;
@@ -52,7 +54,11 @@ body {
   animation: shimmer 2.5s infinite;
 }
 
-@keyframes shimmer { 0% { opacity: .5; } 50% { opacity: 1; } 100% { opacity: .5; } }
+@keyframes shimmer {
+  0% { opacity: .5; }
+  50% { opacity: 1; }
+  100% { opacity: .5; }
+}
 
 .glow {
   position: absolute;
@@ -64,7 +70,10 @@ body {
   animation: pulseGlow 2s infinite alternate;
 }
 
-@keyframes pulseGlow { 0% { opacity: .3; } 100% { opacity: .6; } }
+@keyframes pulseGlow {
+  0% { opacity: .3; }
+  100% { opacity: .6; }
+}
 
 .form-container {
   background: rgba(0,0,0,.95);
@@ -90,9 +99,15 @@ body {
   animation: formDrop 0.8s ease forwards;
 }
 
-@keyframes formDrop { 0% { top: -100%; } 100% { top: 50%; transform: translate(-50%, -50%) scale(1); } }
+@keyframes formDrop {
+  0% { top: -100%; }
+  100% { top: 50%; transform: translate(-50%, -50%) scale(1); }
+}
 
-h1 { color: #00bfff; margin-bottom: 25px; }
+h1 {
+  color: #00bfff;
+  margin-bottom: 25px;
+}
 
 input, select {
   width: 100%;
@@ -104,15 +119,21 @@ input, select {
   color: white;
 }
 
-input::placeholder { color: #aaa; }
+input::placeholder {
+  color: #aaa;
+}
 
-select { border: 1px solid #00bfff; background-color: #000; color: #fff; appearance: none; cursor: pointer; }
+select {
+  border: 1px solid #00bfff;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+}
 
-select option { background-color: #000; color: #fff; }
-
-select option:hover, select option:checked { background-color: #1e90ff; color: #fff; }
-
-input:focus, select:focus { outline: none; box-shadow: 0 0 20px #00bfff; }
+input:focus, select:focus {
+  outline: none;
+  box-shadow: 0 0 20px #00bfff;
+}
 
 button {
   width: 100%;
@@ -126,9 +147,16 @@ button {
   box-shadow: 0 0 15px #00bfff;
 }
 
-button:hover { background: #1e90ff; color: white; }
+button:hover {
+  background: #1e90ff;
+  color: white;
+}
 
-#backButton { background: transparent; color: #00bfff; border: 1px solid #00bfff; }
+#backButton {
+  background: transparent;
+  color: #00bfff;
+  border: 1px solid #00bfff;
+}
 
 .discord-btn {
   display: block;
@@ -139,26 +167,22 @@ button:hover { background: #1e90ff; color: white; }
   font-weight: bold;
   color: #fff;
   background: linear-gradient(135deg, #5865F2, #404EED);
-  box-shadow: 0 0 20px rgba(88,101,242,0.8);
 }
 
-.success { margin-top: 15px; color: #00ff99; opacity: 0; transition: .5s; }
+.success {
+  margin-top: 15px;
+  color: #00ff99;
+  opacity: 0;
+  transition: .5s;
+}
 
-.success.show { opacity: 1; }
-
-.confetti-piece {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  pointer-events: none;
-  z-index: 9999;
+.success.show {
+  opacity: 1;
 }
 </style>
 </head>
 
 <body>
-
-<div id="particles"></div>
 
 <div id="logoContainer">
   <img src="https://i.imgur.com/x9a5rrp.png">
@@ -169,12 +193,13 @@ button:hover { background: #1e90ff; color: white; }
 
 <div class="form-container" id="formContainer">
   <h1>VBLL Prize Submission</h1>
+
   <form id="prizeForm">
-    <input id="playerId" placeholder="B-123-123" required>
-    <input id="discordUser" placeholder="Luv.apeks" required>
+    <input id="playerId" placeholder="B-101-29" required>
+    <input id="discordUser" placeholder="@viera8642" required>
 
     <select id="itemWon" required>
-      <option disabled selected>Item Won</option>
+      <option value="" disabled selected>Item Won</option>
       <option>VBLL Blue & White Hat</option>
       <option>Vbll Boots Blue</option>
       <option>Vbll Blue & White Mask</option>
@@ -183,7 +208,7 @@ button:hover { background: #1e90ff; color: white; }
       <option>Scrim Points</option>
     </select>
 
-    <input id="messageLink" placeholder="Message link" required>
+    <input id="messageLink" placeholder="Discord message link" required>
 
     <button id="submitBtn">Submit</button>
     <button type="button" id="backButton">← Back</button>
@@ -219,51 +244,46 @@ backBtn.onclick = () => {
   setTimeout(() => logo.style.display = "flex", 700);
 };
 
-// ✅ Updated: Discord webhook
 const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
-
-function confetti() {
-  for (let i = 0; i < 100; i++) {
-    const c = document.createElement("div");
-    c.className = "confetti-piece";
-    c.style.left = Math.random() * innerWidth + "px";
-    c.style.background = `hsl(${Math.random()*360},100%,50%)`;
-    document.body.appendChild(c);
-    c.animate([{top:"-10px"},{top:innerHeight+"px"}], {
-      duration: 3000 + Math.random()*2000
-    }).onfinish = () => c.remove();
-  }
-}
 
 form.onsubmit = e => {
   e.preventDefault();
-  submitBtn.classList.add("loading");
-  submitBtn.disabled = true;
+
+  if (!itemWon.value) {
+    alert("Please select an item.");
+    return;
+  }
+
+  if (!messageLink.value.startsWith("https://discord.com/channels/")) {
+    alert("Please enter a valid Discord message link.");
+    return;
+  }
+
+  let discordName = discordUser.value.trim();
+  if (!discordName.startsWith("@")) {
+    discordName = "@" + discordName;
+  }
 
   const content =
-    `${playerId.value.trim()} | ` +
-    `${discordUser.value.trim()} | ` +
-    `${itemWon.value} | ` +
-    `${messageLink.value.trim()}`;
+`${playerId.value.trim()} | ${discordName} | ${itemWon.value} |
+${messageLink.value.trim()}`;
+
+  submitBtn.disabled = true;
 
   fetch(WEBHOOK_URL, {
     method: "POST",
-    headers: {"Content-Type":"application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ content })
   })
-  .then(res => {
-    if (!res.ok) throw new Error();
-    submitBtn.classList.remove("loading");
+  .then(() => {
     submitBtn.disabled = false;
     success.classList.add("show");
-    confetti();
     form.reset();
     setTimeout(() => success.classList.remove("show"), 4000);
   })
   .catch(() => {
-    submitBtn.classList.remove("loading");
     submitBtn.disabled = false;
-    alert("❌ Submission failed. This can happen due to Discord CORS restrictions when sending from a browser. Try using a server-side proxy.");
+    alert("Submission failed.");
   });
 };
 </script>
