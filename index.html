@@ -27,52 +27,98 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-#logoContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  z-index: 10;
-  animation: pulse 2s infinite;
-}
-
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
 
+/* Help Book */
+#helpContainer {
+  position: fixed;
+  top: 20px;
+  right: 25px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 100;
+}
+
+#helpBook {
+  font-size: 42px;
+  filter: drop-shadow(0 0 15px #00bfff);
+  animation: pulse 2s infinite;
+}
+
+#helpText {
+  color: #00ffff;
+  font-size: 12px;
+  margin-top: 4px;
+  text-shadow: 0 0 12px #00bfff;
+}
+
+/* Help Modal */
+#helpModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.helpContent {
+  background: #000;
+  border: 2px solid #00bfff;
+  box-shadow: 0 0 40px #00bfff;
+  border-radius: 15px;
+  padding: 30px;
+  width: 90%;
+  max-width: 550px;
+  color: white;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: helpIn .35s ease forwards;
+}
+
+@keyframes helpIn {
+  from { opacity: 0; transform: scale(.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes helpOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(.85); }
+}
+
+.danger { color: #ff4d4d; font-weight: bold; }
+.warning { color: #ffd966; }
+.successText { color: #00ff99; }
+
+#closeHelp {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  background: #00bfff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Main */
+#logoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+}
+
 #logoContainer img {
   width: 220px;
   border-radius: 15px;
   box-shadow: 0 0 30px #00bfff;
-}
-
-#logoContainer p {
-  margin-top: 15px;
-  color: #00ffff;
-  animation: shimmer 2.5s infinite;
-}
-
-@keyframes shimmer {
-  0% { opacity: .5; }
-  50% { opacity: 1; }
-  100% { opacity: .5; }
-}
-
-.glow {
-  position: absolute;
-  width: 420px;
-  height: 520px;
-  border-radius: 25px;
-  background: rgba(0,191,255,0.15);
-  filter: blur(25px);
-  animation: pulseGlow 2s infinite alternate;
-}
-
-@keyframes pulseGlow {
-  0% { opacity: .3; }
-  100% { opacity: .6; }
 }
 
 .form-container {
@@ -90,13 +136,12 @@ body {
   pointer-events: none;
   transform: translate(-50%, -50%) scale(.8);
   transition: all 1s ease;
-  z-index: 20;
 }
 
 .form-container.show {
   opacity: 1;
   pointer-events: auto;
-  animation: formDrop 0.8s ease forwards;
+  animation: formDrop .8s ease forwards;
 }
 
 @keyframes formDrop {
@@ -104,131 +149,85 @@ body {
   100% { top: 50%; transform: translate(-50%, -50%) scale(1); }
 }
 
-h1 {
-  color: #00bfff;
-  margin-bottom: 25px;
-}
-
-input, select {
+input, select, button {
   width: 100%;
   padding: 14px;
   margin: 12px 0;
   border-radius: 10px;
   border: none;
+}
+
+input, select {
   background: rgba(255,255,255,.1);
   color: white;
 }
 
-input::placeholder {
-  color: #aaa;
-}
-
-select {
-  border: 1px solid #00bfff;
-  background-color: #000;
-  color: #fff;
-  cursor: pointer;
-}
-
-input:focus, select:focus {
-  outline: none;
-  box-shadow: 0 0 20px #00bfff;
-}
-
 button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 15px;
   background: #00bfff;
-  border: none;
-  border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 0 15px #00bfff;
 }
 
-button:hover {
-  background: #1e90ff;
-  color: white;
-}
-
-#backButton {
-  background: transparent;
-  color: #00bfff;
-  border: 1px solid #00bfff;
-}
-
-.discord-btn {
-  display: block;
-  margin-top: 15px;
-  padding: 14px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-  color: #fff;
-  background: linear-gradient(135deg, #5865F2, #404EED);
-}
-
-.success {
-  margin-top: 15px;
-  color: #00ff99;
-  opacity: 0;
-  transition: .5s;
-}
-
-.success.show {
-  opacity: 1;
-}
-
-/* Preview box with glow and word wrap */
-#preview {
-  margin-top: 15px;
-  padding: 10px;
-  border-radius: 10px;
-  color: #00ffff;
+#adminCopyBtn {
   display: none;
-  white-space: pre-wrap;       /* Wrap long text */
-  word-break: break-word;      /* Break long words/links */
-  background: rgba(0,191,255,0.05);
+  background: #111;
   border: 1px dashed #00bfff;
-  box-shadow: 0 0 20px #00bfff;
-  animation: previewPulse 2s infinite alternate;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-@keyframes previewPulse {
-  0% { box-shadow: 0 0 10px #00bfff; }
-  100% { box-shadow: 0 0 30px #00bfff; }
-}
-
-@media (max-width: 500px) {
-  .form-container {
-    width: 90%;
-    padding: 20px;
-  }
+  color: #00ffff;
 }
 </style>
 </head>
 
 <body>
 
+<!-- Help -->
+<div id="helpContainer">
+  <div id="helpBook">📘</div>
+  <div id="helpText">Press for help</div>
+</div>
+
+<div id="helpModal">
+  <div class="helpContent">
+    <h2>📌 IMPORTANT SUBMISSION RULES – READ CAREFULLY</h2>
+
+    <p><strong>1️⃣ Player ID</strong><br>
+    Found in your VRFS menu. Example: <strong>B-176-354</strong></p>
+
+    <p><strong>2️⃣ Discord Username</strong><br>
+    Enter your Discord username (NOT display name).</p>
+
+    <p><strong>3️⃣ Rewarded Item</strong><br>
+    Only submit the exact rewarded item.<br>
+    <span class="danger">False submissions = PERMANENT BAN</span></p>
+
+    <p><strong>4️⃣ Discord Message Link (MOST IMPORTANT)</strong><br>
+    Message must say:<br>
+    <em>“@username has won VBLL [item]”</em></p>
+
+    <p class="warning">
+      ⚠️ If the message is deleted, the reward cannot be claimed.
+    </p>
+
+    <p class="successText">✅ Double-check everything.</p>
+
+    <button id="closeHelp">Close</button>
+  </div>
+</div>
+
 <div id="logoContainer">
   <img src="https://i.imgur.com/x9a5rrp.png">
   <p>Click the logo to access the form</p>
 </div>
 
-<div class="glow"></div>
-
 <div class="form-container" id="formContainer">
   <h1>VBLL Prize Submission</h1>
 
   <form id="prizeForm">
-    <input id="playerId" placeholder="B-101-29" required>
-    <input id="discordUser" placeholder="@papa apeks" required>
+    <input id="playerId" placeholder="B-176-354" required>
+    <input id="discordUser" placeholder="@username" required>
 
     <select id="itemWon" required>
-      <option value="" disabled selected>Item Won</option>
+      <option disabled selected>Item Won</option>
       <option>VBLL Blue & White Hat</option>
       <option>Vbll Boots Blue</option>
       <option>Vbll Blue & White Mask</option>
@@ -239,113 +238,64 @@ button:hover {
 
     <input id="messageLink" placeholder="Discord message link" required>
 
-    <!-- Preview box -->
-    <div id="preview">Preview will appear here...</div>
-
     <button id="submitBtn">Submit</button>
-    <button type="button" id="backButton">← Back</button>
+    <button type="button" id="adminCopyBtn">📦 Copy for Admin</button>
   </form>
-
-  <div class="success" id="successMessage">✅ Submitted successfully!</div>
-
-  <a href="https://discord.gg/vbll" target="_blank" class="discord-btn">
-    Join VBLL Discord
-  </a>
 </div>
 
 <script>
 const logo = document.getElementById("logoContainer");
 const formBox = document.getElementById("formContainer");
-const backBtn = document.getElementById("backButton");
-const form = document.getElementById("prizeForm");
-const success = document.getElementById("successMessage");
-const submitBtn = document.getElementById("submitBtn");
-
-const playerId = document.getElementById("playerId");
-const discordUser = document.getElementById("discordUser");
-const itemWon = document.getElementById("itemWon");
-const messageLink = document.getElementById("messageLink");
-const preview = document.getElementById("preview");
+const helpModal = document.getElementById("helpModal");
+const closeHelp = document.getElementById("closeHelp");
+const adminCopyBtn = document.getElementById("adminCopyBtn");
 
 logo.onclick = () => {
   logo.style.display = "none";
   formBox.classList.add("show");
 };
 
-backBtn.onclick = () => {
-  formBox.classList.remove("show");
-  setTimeout(() => logo.style.display = "flex", 700);
+document.getElementById("helpContainer").onclick = () => {
+  helpModal.style.display = "flex";
 };
 
-// Discord webhook URL
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1449604098251816980/m_mbuU1CNh9nPGJAoQYA6AcrViRNbYQaYeVYAKNUH_Go0s2e8Fj1H99tT2fdEM7zTB5O";
+closeHelp.onclick = () => {
+  const box = document.querySelector(".helpContent");
+  box.style.animation = "helpOut .25s ease forwards";
+  setTimeout(() => helpModal.style.display = "none", 250);
+};
 
-// Update preview (line break before message link)
-function updatePreview() {
-  let discordName = discordUser.value.trim();
-  if (!discordName.startsWith("@")) discordName = "@" + discordName;
+helpModal.onclick = e => {
+  if (e.target === helpModal) closeHelp.onclick();
+};
 
-  const previewContent = `${playerId.value.trim()} | ${discordName} | ${itemWon.value}\n+ your message link`;
+/* 🔐 Admin Mode with Password */
+let adminMode = false;
+const ADMIN_PASSWORD = "Zachtheone22";
 
-  if (playerId.value && discordUser.value && itemWon.value && messageLink.value) {
-    preview.style.display = "block";
-    preview.textContent = previewContent;
-  } else {
-    preview.style.display = "none";
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "a") {
+    if (!adminMode) {
+      const input = prompt("Enter admin password:");
+      if (input === ADMIN_PASSWORD) {
+        adminMode = true;
+        adminCopyBtn.style.display = "block";
+        alert("Admin Mode Enabled");
+      } else {
+        alert("Incorrect password.");
+      }
+    } else {
+      adminMode = false;
+      adminCopyBtn.style.display = "none";
+      alert("Admin Mode Disabled");
+    }
   }
-}
-
-// Update preview on input
-[playerId, discordUser, itemWon, messageLink].forEach(el => {
-  el.addEventListener("input", updatePreview);
-  el.addEventListener("change", updatePreview);
 });
 
-// Form submission
-form.onsubmit = e => {
-  e.preventDefault();
-
-  if (!itemWon.value) {
-    alert("Please select an item.");
-    return;
-  }
-
-  if (!messageLink.value.startsWith("https://discord.com/channels/")) {
-    alert("Please enter a valid Discord message link.");
-    return;
-  }
-
-  let discordName = discordUser.value.trim();
-  if (!discordName.startsWith("@")) {
-    discordName = "@" + discordName;
-  }
-
-  const content = `${playerId.value.trim()} | ${discordName} | ${itemWon.value} 
-${messageLink.value.trim()}`;
-
-  if (!confirm(`Are you sure you want to submit:\n\n${content}`)) return;
-
-  submitBtn.disabled = true;
-  submitBtn.innerText = "Submitting...";
-
-  fetch(WEBHOOK_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content })
-  })
-  .then(() => {
-    submitBtn.disabled = false;
-    submitBtn.innerText = "Submit";
-    success.classList.add("show");
-    form.reset();
-    preview.style.display = "none";
-    setTimeout(() => success.classList.remove("show"), 4000);
-  })
-  .catch(() => {
-    submitBtn.disabled = false;
-    submitBtn.innerText = "Submit";
-    alert("Submission failed.");
-  });
+adminCopyBtn.onclick = () => {
+  const text = `${playerId.value} | ${discordUser.value} | ${itemWon.value}\n${messageLink.value}`;
+  navigator.clipboard.writeText(text);
+  alert("Copied for admin.");
 };
 </script>
 
